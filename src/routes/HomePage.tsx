@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, ShieldCheck, Sparkles, Trophy } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -9,7 +9,7 @@ import { featuredTournament } from '../data/tournaments';
 import { leaderboardTeams } from '../data/leaderboard';
 import { news } from '../data/news';
 import { results } from '../data/results';
-import { scrimSessions } from '../data/scrims';
+import { promos, scrimSessions } from '../data/scrims';
 import { siteConfig } from '../data/siteConfig';
 import { stats } from '../data/stats';
 
@@ -109,35 +109,77 @@ const HomePage = () => {
           <motion.div initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.45 }} className="min-w-0 space-y-6">
             <div className="rounded-[40px] border border-white/10 bg-[#0d0d16] p-4 shadow-card sm:p-5">
               <div className="relative overflow-hidden rounded-[28px] border border-violet/30 bg-[#05050a]">
-                <img
-                  src={currentSlide.image}
-                  alt={currentSlide.title}
-                  className="h-[420px] w-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#06070b] via-[#06070b]/30 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 p-6 sm:p-7">
-                  <p className="text-xs uppercase tracking-[0.35em] text-violet/80">{currentSlide.eyebrow}</p>
-                  <h3 className="mt-3 max-w-md break-words text-2xl font-semibold text-white sm:text-3xl">{currentSlide.title}</h3>
-                  <p className="mt-3 max-w-lg break-words text-sm leading-6 text-silver/85">{currentSlide.description}</p>
-                  <Link
-                    to={currentSlide.href}
-                    className="mt-5 inline-flex items-center gap-2 rounded-full bg-violet px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5"
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentSlide.title}
+                    initial={{ opacity: 0, x: 26 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -26 }}
+                    transition={{ duration: 0.45 }}
+                    className="relative"
                   >
-                    {currentSlide.cta}
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
+                    <img
+                      src={currentSlide.image}
+                      alt={currentSlide.title}
+                      className="h-[280px] w-full object-cover sm:h-[360px] lg:h-[420px]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#06070b] via-[#06070b]/40 to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 p-6 sm:p-7">
+                      <p className="text-xs uppercase tracking-[0.35em] text-violet/80">{currentSlide.eyebrow}</p>
+                      <h3 className="mt-3 max-w-md break-words text-2xl font-semibold text-white sm:text-3xl">{currentSlide.title}</h3>
+                      <p className="mt-3 max-w-lg break-words text-sm leading-6 text-silver/85">{currentSlide.description}</p>
+                      <Link
+                        to={currentSlide.href}
+                        className="mt-5 inline-flex items-center gap-2 rounded-full bg-violet px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5"
+                      >
+                        {currentSlide.cta}
+                        <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+                <div className="absolute bottom-4 left-4 right-4 hidden items-center justify-between gap-3 sm:flex">
+                  <button
+                    type="button"
+                    onClick={() => setActiveSlide((current) => (current - 1 + posterSlides.length) % posterSlides.length)}
+                    className="rounded-full border border-white/15 bg-black/40 px-4 py-2 text-xs uppercase tracking-[0.35em] text-white transition hover:bg-white/10"
+                  >
+                    Previous
+                  </button>
+                  <div className="flex items-center justify-center gap-2">
+                    {posterSlides.map((slide, index) => (
+                      <button
+                        key={slide.title}
+                        type="button"
+                        aria-label={`Show slide ${index + 1}`}
+                        onClick={() => setActiveSlide(index)}
+                        className={`h-2.5 rounded-full transition-all ${index === activeSlide ? 'w-8 bg-violet' : 'w-2.5 bg-white/25 hover:bg-white/40'}`}
+                      />
+                    ))}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setActiveSlide((current) => (current + 1) % posterSlides.length)}
+                    className="rounded-full border border-white/15 bg-black/40 px-4 py-2 text-xs uppercase tracking-[0.35em] text-white transition hover:bg-white/10"
+                  >
+                    Next
+                  </button>
                 </div>
               </div>
 
-              <div className="mt-5 flex items-center justify-center gap-2">
-                {posterSlides.map((slide, index) => (
-                  <button
-                    key={slide.title}
-                    type="button"
-                    aria-label={`Show slide ${index + 1}`}
-                    onClick={() => setActiveSlide(index)}
-                    className={`h-2.5 rounded-full transition-all ${index === activeSlide ? 'w-8 bg-violet' : 'w-2.5 bg-white/25 hover:bg-white/40'}`}
-                  />
+              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                {promos.map((promo) => (
+                  <div key={promo.id} className="rounded-[28px] border border-white/10 bg-[#0b0b12] p-5 shadow-card">
+                    <div className="flex items-center justify-between gap-3">
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.35em] text-violet/70">{promo.title}</p>
+                        <p className="mt-2 text-lg font-semibold text-white">{promo.offerPrice}</p>
+                      </div>
+                      <span className="rounded-full bg-violet/10 px-3 py-2 text-xs uppercase tracking-[0.35em] text-violet">{promo.discount}</span>
+                    </div>
+                    <p className="mt-4 text-sm leading-6 text-silver/80">{promo.description}</p>
+                    <p className="mt-4 text-xs uppercase tracking-[0.35em] text-silver/60">Ends {new Date(promo.expiresAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</p>
+                  </div>
                 ))}
               </div>
             </div>
