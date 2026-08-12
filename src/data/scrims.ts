@@ -1,0 +1,71 @@
+import type { Offer, ScrimSession } from '../types/site';
+
+export const scrimSessions: ScrimSession[] = [
+  {
+    id: 'session-1',
+    title: 'Daily Scrim',
+    time: '1:00 PM – 3:00 PM',
+    status: 'UPCOMING',
+    entryFee: '₹25',
+    prizePool: '₹800',
+    maps: ['Erangel', 'Miramar', 'Rondo'],
+    teams: '16–18 Teams',
+    description: 'Competitive warm-up session for teams practicing paced rotations.',
+  },
+  {
+    id: 'session-2',
+    title: 'Daily Scrim',
+    time: '3:00 PM – 5:00 PM',
+    status: 'UPCOMING',
+    entryFee: '₹25',
+    prizePool: '₹900',
+    maps: ['Erangel', 'Miramar', 'Rondo'],
+    teams: '16–18 Teams',
+    description: 'Mid-day scrim for serious BGMI teams.',
+  },
+  {
+    id: 'session-3',
+    title: 'Daily Scrim',
+    time: '7:00 PM – 9:00 PM',
+    status: 'LIVE',
+    entryFee: '₹35',
+    prizePool: '₹1,000',
+    maps: ['Erangel', 'Miramar', 'Rondo'],
+    teams: '16–18 Teams',
+    description: 'Prime-time competitive session with live updates.',
+  },
+  {
+    id: 'session-4',
+    title: 'Daily Scrim',
+    time: '9:00 PM – 11:00 PM',
+    status: 'UPCOMING',
+    entryFee: '₹35',
+    prizePool: '₹1,050',
+    maps: ['Erangel', 'Miramar', 'Rondo'],
+    teams: '16–18 Teams',
+    description: 'Night session designed for high-skill practice.',
+  },
+  {
+    id: 'session-5',
+    title: 'Daily Scrim',
+    time: '11:00 PM – 1:00 AM',
+    status: 'UPCOMING',
+    entryFee: '₹35',
+    prizePool: '₹1,000',
+    maps: ['Erangel', 'Miramar', 'Rondo'],
+    teams: '16–18 Teams',
+    description: 'Late-night scrim for focused squads.',
+  },
+];
+
+export const promos: Offer[] = [
+  {
+    id: 'independence-1',
+    title: 'INDEPENDENCE DAY OFFER 🇮🇳',
+    description: '3 Matches @ ₹25',
+    regularPrice: '₹35',
+    offerPrice: '₹25',
+    discount: '30%',
+    expiresAt: '2026-08-20T23:59:59.000Z',
+  },
+];
