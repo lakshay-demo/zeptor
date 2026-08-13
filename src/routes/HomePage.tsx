@@ -97,7 +97,7 @@ const HomePage = () => {
                     <img
                       src={currentSlide.image}
                       alt={currentSlide.title}
-                      className="h-[280px] w-full object-cover sm:h-[360px] lg:h-[420px]"
+                      className="h-[340px] w-full object-contain sm:h-[420px] lg:h-[520px]"
                     />
                   </motion.div>
                 </AnimatePresence>
@@ -115,16 +115,26 @@ const HomePage = () => {
               </div>
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
                 {promos.map((promo) => (
-                  <div key={promo.id} className="rounded-[28px] border border-white/10 bg-[#0b0b12] p-5 shadow-card">
-                    <div className="flex items-center justify-between gap-3">
-                      <div>
-                        <p className="text-xs uppercase tracking-[0.35em] text-violet/70">{promo.title}</p>
-                        <p className="mt-2 text-lg font-semibold text-white">{promo.offerPrice}</p>
+                  <div key={promo.id} className="min-h-[220px] rounded-[28px] border border-white/10 bg-[#0b0b12] p-5 shadow-card sm:min-h-[240px]">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <p className="text-[10px] uppercase tracking-[0.25em] text-violet/70 sm:text-[11px]">{promo.title}</p>
+                        <p className="mt-2 text-2xl font-semibold text-white sm:text-3xl">{promo.offerPrice}</p>
                       </div>
-                      <span className="rounded-full bg-violet/10 px-3 py-2 text-xs uppercase tracking-[0.35em] text-violet">{promo.discount}</span>
+                      <span className="shrink-0 rounded-full bg-violet/10 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-violet sm:text-[11px]">{promo.discount}</span>
                     </div>
-                    <p className="mt-4 text-sm leading-6 text-silver/80">{promo.description}</p>
-                    <p className="mt-4 text-xs uppercase tracking-[0.35em] text-silver/60">Ends {new Date(promo.expiresAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</p>
+
+                    <div className="mt-5 space-y-3">
+                      <p className="text-sm leading-6 text-silver/80">{promo.description}</p>
+                      <div className="flex items-center justify-between gap-3 border-t border-white/5 pt-3">
+                        <span className="text-sm text-silver/50 line-through">{promo.regularPrice}</span>
+                        <span className="text-sm font-medium text-violet">Save {promo.discount}</span>
+                      </div>
+                    </div>
+
+                    <p className="mt-4 text-[10px] uppercase tracking-[0.25em] text-silver/60 sm:text-[11px]">
+                      Ends {new Date(promo.expiresAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
+                    </p>
                   </div>
                 ))}
               </div>
