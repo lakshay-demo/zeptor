@@ -9,7 +9,6 @@ export type ScrimSession = {
   id: string;
   title: string;
   time: string;
-  status: 'LIVE' | 'UPCOMING' | 'COMPLETED';
   entryFee: string;
   prizePool: string;
   maps: string[];

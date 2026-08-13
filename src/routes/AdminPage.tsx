@@ -99,10 +99,9 @@ const AdminPage = () => (
         <div className="rounded-[36px] border border-white/10 bg-[#0f0f18] p-6 shadow-card">
           <div className="flex items-center justify-between gap-4">
             <div>
-              <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Upcoming sessions</p>
+              <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Daily sessions</p>
               <h2 className="mt-3 text-2xl font-semibold text-white">Next scrim schedule</h2>
             </div>
-            <span className="rounded-full bg-violet/10 px-4 py-2 text-xs uppercase tracking-[0.35em] text-violet">Live now</span>
           </div>
           <div className="mt-6 space-y-4">
             {scrimSessions.slice(0, 3).map((session) => (
@@ -112,9 +111,6 @@ const AdminPage = () => (
                     <p className="text-sm uppercase tracking-[0.35em] text-silver/70">{session.time}</p>
                     <p className="mt-2 text-lg font-semibold text-white">{session.title}</p>
                   </div>
-                  <span className={`rounded-full px-3 py-1 text-xs font-semibold uppercase ${session.status === 'LIVE' ? 'bg-red-500/15 text-red-300' : session.status === 'UPCOMING' ? 'bg-violet/10 text-violet' : 'bg-white/10 text-silver'}`}>
-                    {session.status}
-                  </span>
                 </div>
                 <div className="mt-4 grid gap-3 sm:grid-cols-3 text-sm text-silver/80">
                   <p>Fee: {session.entryFee}</p>

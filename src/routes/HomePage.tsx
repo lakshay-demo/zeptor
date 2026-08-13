@@ -14,30 +14,9 @@ import { siteConfig } from '../data/siteConfig';
 import { stats } from '../data/stats';
 
 const posterSlides = [
-  {
-    image: heroScrimsPoster,
-    eyebrow: 'Free BGMI Scrims',
-    title: 'Daily scrims are live',
-    description: 'Competitive practice, fair rules, and premium BGMI match flow for serious squads.',
-    href: '/scrims',
-    cta: 'Join scrims',
-  },
-  {
-    image: heroRecruitmentPoster,
-    eyebrow: 'Recruitment',
-    title: 'We are looking for players',
-    description: 'Join a focused community built around skill, discipline, and tournament-ready play.',
-    href: '/teams',
-    cta: 'Explore teams',
-  },
-  {
-    image: heroTournamentPoster,
-    eyebrow: 'Tournament',
-    title: 'Season 1 is on the way',
-    description: 'Roadmap qualifiers, league stages and finals designed for aspiring BGMI teams.',
-    href: '/tournaments',
-    cta: 'See tournament',
-  },
+  { image: heroScrimsPoster, title: 'Zeptor Daily Scrims' },
+  { image: heroRecruitmentPoster, title: 'Zeptor Recruitment' },
+  { image: heroTournamentPoster, title: 'Zeptor Tournament' },
 ];
 
 const sectionTitle = (title: string, subtitle: string) => (
@@ -66,9 +45,6 @@ const HomePage = () => {
       <div className="relative mx-auto max-w-7xl">
         <section className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
           <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }} className="min-w-0 space-y-6 pb-8 pt-8">
-            <div className="inline-flex items-center gap-2 rounded-full border border-violet/30 bg-white/5 px-4 py-2 text-sm text-violet shadow-card">
-              <span className="h-2 w-2 rounded-full bg-red-500" /> LIVE / UPCOMING
-            </div>
             <div className="min-w-0">
               <p className="text-base uppercase tracking-[0.4em] text-violet/60">Zeptor Esports</p>
               <h1 className="mt-4 max-w-3xl break-words text-5xl font-semibold leading-[1.05] text-white sm:text-6xl">
@@ -123,50 +99,20 @@ const HomePage = () => {
                       alt={currentSlide.title}
                       className="h-[280px] w-full object-cover sm:h-[360px] lg:h-[420px]"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#06070b] via-[#06070b]/40 to-transparent" />
-                    <div className="absolute inset-x-0 bottom-0 p-6 sm:p-7">
-                      <p className="text-xs uppercase tracking-[0.35em] text-violet/80">{currentSlide.eyebrow}</p>
-                      <h3 className="mt-3 max-w-md break-words text-2xl font-semibold text-white sm:text-3xl">{currentSlide.title}</h3>
-                      <p className="mt-3 max-w-lg break-words text-sm leading-6 text-silver/85">{currentSlide.description}</p>
-                      <Link
-                        to={currentSlide.href}
-                        className="mt-5 inline-flex items-center gap-2 rounded-full bg-violet px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5"
-                      >
-                        {currentSlide.cta}
-                        <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    </div>
                   </motion.div>
                 </AnimatePresence>
-                <div className="absolute bottom-4 left-4 right-4 hidden items-center justify-between gap-3 sm:flex">
-                  <button
-                    type="button"
-                    onClick={() => setActiveSlide((current) => (current - 1 + posterSlides.length) % posterSlides.length)}
-                    className="rounded-full border border-white/15 bg-black/40 px-4 py-2 text-xs uppercase tracking-[0.35em] text-white transition hover:bg-white/10"
-                  >
-                    Previous
-                  </button>
-                  <div className="flex items-center justify-center gap-2">
-                    {posterSlides.map((slide, index) => (
-                      <button
-                        key={slide.title}
-                        type="button"
-                        aria-label={`Show slide ${index + 1}`}
-                        onClick={() => setActiveSlide(index)}
-                        className={`h-2.5 rounded-full transition-all ${index === activeSlide ? 'w-8 bg-violet' : 'w-2.5 bg-white/25 hover:bg-white/40'}`}
-                      />
-                    ))}
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setActiveSlide((current) => (current + 1) % posterSlides.length)}
-                    className="rounded-full border border-white/15 bg-black/40 px-4 py-2 text-xs uppercase tracking-[0.35em] text-white transition hover:bg-white/10"
-                  >
-                    Next
-                  </button>
-                </div>
               </div>
-
+              <div className="mt-4 flex items-center justify-center gap-2">
+                {posterSlides.map((slide, index) => (
+                  <button
+                    key={slide.title}
+                    type="button"
+                    aria-label={`Show slide ${index + 1}`}
+                    onClick={() => setActiveSlide(index)}
+                    className={`h-2.5 rounded-full transition-all ${index === activeSlide ? 'w-8 bg-violet' : 'w-2.5 bg-white/25 hover:bg-white/40'}`}
+                  />
+                ))}
+              </div>
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
                 {promos.map((promo) => (
                   <div key={promo.id} className="rounded-[28px] border border-white/10 bg-[#0b0b12] p-5 shadow-card">
@@ -186,12 +132,12 @@ const HomePage = () => {
 
             <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-1">
               <div className="rounded-[36px] border border-white/10 bg-[#0f0f18] p-6 shadow-card">
-                <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Live viewers</p>
+                <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Audience</p>
                 <p className="mt-4 text-4xl font-semibold text-white">1.2K</p>
-                <p className="mt-2 text-sm text-silver/80">Live commentary and squad insights</p>
+                <p className="mt-2 text-sm text-silver/80">Competitive commentary and squad insights</p>
               </div>
               <div className="rounded-[36px] border border-white/10 bg-[#0f0f18] p-6 shadow-card">
-                <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Upcoming event</p>
+                <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Next event</p>
                 <p className="mt-4 text-4xl font-semibold text-white">Zeptor Season 1</p>
                 <p className="mt-2 text-sm text-silver/80">128 team bracket opening soon</p>
               </div>
@@ -218,7 +164,7 @@ const HomePage = () => {
         </section>
 
         <section className="mt-16">
-          {sectionTitle('Live / Upcoming Event', 'Zeptor Daily Scrims')}
+          {sectionTitle('Daily Scrims', 'Zeptor Daily Scrims')}
           <div className="grid gap-5 lg:grid-cols-2">
             {scrimSessions.map((session) => (
               <motion.div
@@ -233,9 +179,6 @@ const HomePage = () => {
                     <p className="text-xs uppercase tracking-[0.35em] text-violet/70">{session.time}</p>
                     <h3 className="mt-3 text-xl font-semibold text-white">{session.title}</h3>
                   </div>
-                  <span className={`rounded-full px-3 py-1 text-xs font-semibold uppercase ${session.status === 'LIVE' ? 'bg-red-500/15 text-red-300' : session.status === 'UPCOMING' ? 'bg-violet/10 text-violet' : 'bg-white/10 text-silver'}`}>
-                    {session.status}
-                  </span>
                 </div>
                 <div className="mt-6 grid gap-3 sm:grid-cols-2">
                   <div className="rounded-3xl bg-white/5 p-4">

@@ -34,7 +34,7 @@ const ScrimDetailsPage = () => {
         <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Scrim details</p>
         <h1 className="mt-4 text-4xl font-semibold text-white sm:text-5xl">{session.title}</h1>
         <p className="mt-4 max-w-3xl text-sm leading-7 text-silver/80 sm:text-base">Get the full match briefing, room information, rules and registration details for this BGMI scrim.</p>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 grid gap-4 sm:grid-cols-3">
           <div className="rounded-3xl bg-white/5 p-5">
             <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Time</p>
             <p className="mt-3 text-lg font-semibold text-white">{session.time} IST</p>
@@ -46,10 +46,6 @@ const ScrimDetailsPage = () => {
           <div className="rounded-3xl bg-white/5 p-5">
             <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Prize Pool</p>
             <p className="mt-3 text-lg font-semibold text-white">{session.prizePool}</p>
-          </div>
-          <div className="rounded-3xl bg-white/5 p-5">
-            <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Status</p>
-            <p className="mt-3 text-lg font-semibold text-white">{session.status}</p>
           </div>
         </div>
         <div className="mt-8 grid gap-4 lg:grid-cols-2">

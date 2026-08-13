@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Clock3, Globe, ShieldCheck } from 'lucide-react';
 import { scrimSessions, promos } from '../data/scrims';
@@ -36,8 +36,6 @@ const ScrimsPage = () => {
     return () => window.clearInterval(interval);
   }, [offer.expiresAt]);
 
-  const liveCount = useMemo(() => scrimSessions.filter((session) => session.status === 'LIVE').length, []);
-
   return (
     <div className="mx-auto max-w-7xl px-4 pb-16 pt-10 sm:px-6 lg:px-8">
       <section className="rounded-[40px] border border-white/10 bg-[#0b0b13] p-8 shadow-card">
@@ -46,17 +44,13 @@ const ScrimsPage = () => {
             <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Zeptor Daily Scrims</p>
             <h1 className="mt-4 text-4xl font-semibold text-white sm:text-5xl">Compete. Practice. Improve. Dominate.</h1>
             <p className="mt-4 max-w-2xl text-sm leading-7 text-silver/80 sm:text-base">
-              Build momentum with daily BGMI scrims, structured sessions, and live match coverage in IST.
+              Build momentum with daily BGMI scrims, structured sessions, and consistent competitive practice in IST.
             </p>
           </div>
-          <div className="grid gap-3 sm:grid-cols-2 lg:auto-cols-max lg:grid-flow-col">
+          <div className="grid gap-3 sm:grid-cols-1 lg:auto-cols-max lg:grid-flow-col">
             <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-              <p className="text-xs uppercase tracking-[0.35em] text-violet/70">Current sessions</p>
+              <p className="text-xs uppercase tracking-[0.35em] text-violet/70">Daily Sessions</p>
               <p className="mt-3 text-3xl font-semibold text-white">{scrimSessions.length}</p>
-            </div>
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-              <p className="text-xs uppercase tracking-[0.35em] text-violet/70">Live now</p>
-              <p className="mt-3 text-3xl font-semibold text-white">{liveCount}</p>
             </div>
           </div>
         </div>
@@ -78,7 +72,6 @@ const ScrimsPage = () => {
                   <h2 className="mt-3 text-2xl font-semibold text-white">{session.title}</h2>
                   <p className="mt-3 text-sm text-silver/80">{session.description}</p>
                 </div>
-                <span className={`rounded-full px-4 py-2 text-xs font-semibold uppercase ${session.status === 'LIVE' ? 'bg-red-500/15 text-red-300' : session.status === 'UPCOMING' ? 'bg-violet/10 text-violet' : 'bg-white/10 text-silver'}`}>{session.status}</span>
               </div>
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
                 <div className="rounded-3xl bg-white/5 p-4">
@@ -117,8 +110,11 @@ const ScrimsPage = () => {
               <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Tournament-ready format</p>
             </div>
             <div className="mt-5 space-y-3 text-sm leading-7 text-silver/80">
-              <p>Team slots are balanced for scrim quality, matchmaking depth and meaningful practice.</p>
-              <p>Matches run in IST and are optimized for BGMI competitive play.</p>
+              <p>Lobby Size: 16–18 Teams</p>
+              <p>Advance Room</p>
+              <p>Stream + Casting</p>
+              <p>Maps: Erangel, Miramar and Rondo</p>
+              <p>Bonus Reward: Back-to-Back WWCD • 65+ total kills • ₹200</p>
             </div>
           </div>
           <div className="rounded-[36px] border border-white/10 bg-[#0f0f18] p-6 shadow-card">
