@@ -67,8 +67,12 @@ const Footer = () => (
             {siteConfig.email}
           </a>
           <p>Phone</p>
-          <a href={`tel:${siteConfig.contactPhone}`} className="block text-white hover:text-violet">
-            {siteConfig.contactPhone}
+          <a href="tel:8700146531" className="block text-white hover:text-violet">
+            8700146531
+          </a>
+          <p>Mobile</p>
+          <a href="tel:8700146531" className="block text-white hover:text-violet">
+            8700146531
           </a>
         </div>
       </div>
