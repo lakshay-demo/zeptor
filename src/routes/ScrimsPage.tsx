@@ -5,9 +5,12 @@ import { ArrowRight, Clock3, Globe, ShieldCheck } from 'lucide-react';
 import { scrimSessions, promos } from '../data/scrims';
 import { siteConfig } from '../data/siteConfig';
 
+const whatsappRegistrationMessage = (sessionTitle: string) =>
+  `Hi Shadow, I want to register for ${sessionTitle}. Please share the full registration details and payment process.`;
+
 const whatsappRegistrationLink = (sessionTitle: string) => {
   const phone = (siteConfig.scrimRegistrationPhone || siteConfig.contactPhone || '').replace(/\D/g, '');
-  const message = encodeURIComponent(`Hi Zeptor, I want to register for ${sessionTitle}. Please share the full registration details and payment process.`);
+  const message = encodeURIComponent(whatsappRegistrationMessage(sessionTitle));
 
   return phone ? `https://wa.me/${phone}?text=${message}` : siteConfig.whatsappCommunity;
 };
@@ -98,6 +101,10 @@ const ScrimsPage = () => {
                     JOIN SCRIM
                   </a>
                 </div>
+              </div>
+              <div className="mt-5 rounded-3xl border border-violet/20 bg-violet/5 p-4">
+                <p className="text-[10px] uppercase tracking-[0.35em] text-violet/70">WhatsApp message</p>
+                <p className="mt-3 text-sm leading-6 text-silver/80">{whatsappRegistrationMessage(session.title)}</p>
               </div>
             </motion.div>
           ))}

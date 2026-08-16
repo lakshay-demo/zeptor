@@ -3,9 +3,12 @@ import { Link, useParams } from 'react-router-dom';
 import { scrimSessions } from '../data/scrims';
 import { siteConfig } from '../data/siteConfig';
 
+const whatsappRegistrationMessage = (sessionTitle: string) =>
+  `Hi Shadow, I want to register for ${sessionTitle}. Please share the complete registration details and payment process.`;
+
 const whatsappRegistrationLink = (sessionTitle: string) => {
   const phone = (siteConfig.scrimRegistrationPhone || siteConfig.contactPhone || '').replace(/\D/g, '');
-  const text = encodeURIComponent(`Hi Zeptor, I want to register for ${sessionTitle}. Please share the complete registration details and payment process.`);
+  const text = encodeURIComponent(whatsappRegistrationMessage(sessionTitle));
 
   return phone ? `https://wa.me/${phone}?text=${text}` : siteConfig.whatsappCommunity;
 };
@@ -69,6 +72,10 @@ const ScrimDetailsPage = () => {
               <li>• Join the WhatsApp community for live room updates.</li>
               <li>• Use the official match code shared by Zeptor admin.</li>
             </ul>
+            <div className="mt-6 rounded-3xl border border-violet/20 bg-violet/5 p-4">
+              <p className="text-[10px] uppercase tracking-[0.35em] text-violet/70">WhatsApp message</p>
+              <p className="mt-3 text-sm leading-6 text-silver/80">{whatsappRegistrationMessage(session.title)}</p>
+            </div>
           </div>
           <div className="rounded-[32px] bg-[#0f0f18] p-6">
             <h2 className="text-xl font-semibold text-white">Contact & support</h2>
