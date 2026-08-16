@@ -102,10 +102,6 @@ const ScrimsPage = () => {
                   </a>
                 </div>
               </div>
-              <div className="mt-5 rounded-3xl border border-violet/20 bg-violet/5 p-4">
-                <p className="text-[10px] uppercase tracking-[0.35em] text-violet/70">WhatsApp message</p>
-                <p className="mt-3 text-sm leading-6 text-silver/80">{whatsappRegistrationMessage(session.title)}</p>
-              </div>
             </motion.div>
           ))}
         </div>
