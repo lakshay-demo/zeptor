@@ -13,10 +13,16 @@ import { promos, scrimSessions } from '../data/scrims';
 import { siteConfig } from '../data/siteConfig';
 import { stats } from '../data/stats';
 
-const posterSlides = [
-  { image: heroScrimsPoster, title: 'Zeptor Daily Scrims' },
-  { image: heroRecruitmentPoster, title: 'Zeptor Recruitment' },
-  { image: heroTournamentPoster, title: 'Zeptor Tournament' },
+type HeroBanner = {
+  image: string;
+  title: string;
+  subtitle: string;
+};
+
+const defaultBannerSlides: HeroBanner[] = [
+  { image: heroScrimsPoster, title: 'Zeptor Daily Scrims', subtitle: 'Daily competitive BGMI practice with elite squad battles and high-intensity scrim formats.' },
+  { image: heroRecruitmentPoster, title: 'Zeptor Recruitment', subtitle: 'Build your roster, discover top talent, and compete with a serious esports pipeline.' },
+  { image: heroTournamentPoster, title: 'Zeptor Tournament', subtitle: 'Seasonal events, prize pools, and a streamlined format built for dedicated Indian teams.' },
 ];
 
 const sectionTitle = (title: string, subtitle: string) => (
@@ -27,7 +33,22 @@ const sectionTitle = (title: string, subtitle: string) => (
 );
 
 const HomePage = () => {
+  const [posterSlides, setPosterSlides] = useState<HeroBanner[]>(defaultBannerSlides);
   const [activeSlide, setActiveSlide] = useState(0);
+
+  useEffect(() => {
+    const savedSlides = localStorage.getItem('zeptorHeroBanners');
+    if (savedSlides) {
+      try {
+        const parsed = JSON.parse(savedSlides) as HeroBanner[];
+        if (Array.isArray(parsed) && parsed.length) {
+          setPosterSlides(parsed);
+        }
+      } catch {
+        // ignore invalid localStorage data
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -35,31 +56,31 @@ const HomePage = () => {
     }, 4200);
 
     return () => window.clearInterval(timer);
-  }, []);
+  }, [posterSlides.length]);
 
-  const currentSlide = posterSlides[activeSlide];
+  const currentSlide = posterSlides[activeSlide] || defaultBannerSlides[0];
 
   return (
     <div className="relative min-w-0 overflow-hidden px-4 pb-20 pt-8 sm:px-6 lg:px-8">
-      <div className="absolute inset-x-0 top-0 h-[500px] bg-hero-glow opacity-80" />
+      <div className="absolute inset-x-0 top-0 h-[560px] bg-[radial-gradient(circle_at_top,_rgba(139,92,246,0.18),_transparent_28%)]" />
       <div className="relative mx-auto max-w-7xl">
         <section className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
           <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }} className="min-w-0 space-y-6 pb-8 pt-8">
             <div className="min-w-0">
-              <p className="text-base uppercase tracking-[0.4em] text-violet/60">Zeptor Esports</p>
-              <h1 className="mt-4 max-w-3xl break-words text-5xl font-semibold leading-[1.05] text-white sm:text-6xl">
-                PLAY. COMPETE. <span className="text-violet">DOMINATE.</span>
+              <p className="text-base uppercase tracking-[0.42em] text-violet/70">Zeptor Esports</p>
+              <h1 className="mt-4 max-w-3xl break-words text-5xl font-semibold leading-[1.02] text-white sm:text-6xl lg:text-7xl">
+                PLAY. COMPETE. <span className="gradient-text">DOMINATE.</span>
               </h1>
             </div>
             <p className="max-w-2xl break-words text-base leading-8 text-silver/80 sm:text-lg">
               India-focused competitive BGMI tournaments, daily scrims and esports opportunities built for serious teams.
             </p>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <Link to="/scrims" className="inline-flex items-center justify-center rounded-2xl bg-violet px-6 py-4 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#8c33ff]">
+              <Link to="/scrims" className="btn-primary px-6 py-4 text-sm sm:text-base">
                 JOIN DAILY SCRIMS
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
-              <Link to="/tournaments" className="inline-flex items-center justify-center rounded-2xl border border-violet/30 bg-white/5 px-6 py-4 text-sm font-semibold text-silver transition hover:border-violet hover:text-white">
+              <Link to="/tournaments" className="btn-secondary px-6 py-4 text-sm sm:text-base">
                 EXPLORE TOURNAMENTS
               </Link>
             </div>
@@ -83,7 +104,7 @@ const HomePage = () => {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.45 }} className="min-w-0 space-y-6">
-            <div className="rounded-[40px] border border-white/10 bg-[#0d0d16] p-4 shadow-card sm:p-5">
+            <div className="theme-panel rounded-[40px] p-3 sm:p-4 shadow-card">
               <div className="relative overflow-hidden rounded-[28px] border border-violet/30 bg-[#05050a]">
                 <AnimatePresence mode="wait">
                   <motion.div
@@ -97,15 +118,23 @@ const HomePage = () => {
                     <img
                       src={currentSlide.image}
                       alt={currentSlide.title}
-                      className="h-[340px] w-full object-contain sm:h-[420px] lg:h-[520px]"
+                      className="h-[420px] w-full object-cover sm:h-[500px] lg:h-[620px]"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#090b14]/90 via-[#090b14]/45 to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
+                      <div className="max-w-md rounded-[24px] border border-white/10 bg-black/20 p-5 backdrop-blur-md">
+                        <p className="text-[10px] uppercase tracking-[0.35em] text-violet/80">Featured</p>
+                        <h2 className="mt-3 text-2xl font-semibold text-white sm:text-3xl">{currentSlide.title}</h2>
+                        <p className="mt-3 text-sm leading-6 text-silver/80">{currentSlide.subtitle}</p>
+                      </div>
+                    </div>
                   </motion.div>
                 </AnimatePresence>
               </div>
               <div className="mt-4 flex items-center justify-center gap-2">
                 {posterSlides.map((slide, index) => (
                   <button
-                    key={slide.title}
+                    key={`${slide.title}-${index}`}
                     type="button"
                     aria-label={`Show slide ${index + 1}`}
                     onClick={() => setActiveSlide(index)}

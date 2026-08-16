@@ -1,8 +1,24 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, BarChart3, CalendarDays, MessageSquare, PlusCircle, ShieldCheck, Trash2, Users } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import heroScrimsPoster from '../assets/posters/WhatsApp Image 2026-08-11 at 11.34.56 PM (1).jpeg';
+import heroRecruitmentPoster from '../assets/posters/WhatsApp Image 2026-08-11 at 11.34.56 PM (2).jpeg';
+import heroTournamentPoster from '../assets/posters/WhatsApp Image 2026-08-11 at 11.34.56 PM.jpeg';
 import { featuredTournament } from '../data/tournaments';
 import { leaderboardTeams } from '../data/leaderboard';
 import { scrimSessions } from '../data/scrims';
+
+type BannerConfig = {
+  image: string;
+  title: string;
+  subtitle: string;
+};
+
+const defaultBannerConfigs: BannerConfig[] = [
+  { image: heroScrimsPoster, title: 'Zeptor Daily Scrims', subtitle: 'Daily competitive BGMI practice with elite squads.' },
+  { image: heroRecruitmentPoster, title: 'Zeptor Recruitment', subtitle: 'Talent scouting, team building, and roster growth.' },
+  { image: heroTournamentPoster, title: 'Zeptor Tournament', subtitle: 'Seasonal events designed for high-stakes competition.' },
+];
 
 const quickActions = [
   { icon: PlusCircle, title: 'Publish scrim', description: 'Create a new scrim event for teams and stream viewers.', action: 'Add session' },
@@ -24,8 +40,43 @@ const recentActivity = [
   { id: 'activity-3', time: '1h ago', title: 'Content published', message: 'News announcement posted for Season 1 registration.' },
 ];
 
-const AdminPage = () => (
-  <div className="mx-auto max-w-6xl px-4 pb-16 pt-10 sm:px-6 lg:px-8">
+const AdminPage = () => {
+  const [banners, setBanners] = useState<BannerConfig[]>(defaultBannerConfigs);
+  const [saveMessage, setSaveMessage] = useState('');
+
+  useEffect(() => {
+    const saved = localStorage.getItem('zeptorHeroBanners');
+    if (!saved) return;
+
+    try {
+      const parsed = JSON.parse(saved) as BannerConfig[];
+      if (Array.isArray(parsed) && parsed.length) {
+        setBanners(parsed);
+      }
+    } catch {
+      // ignore invalid banner data
+    }
+  }, []);
+
+  const updateBanner = (index: number, field: keyof BannerConfig, value: string) => {
+    setBanners((current) => current.map((banner, currentIndex) => (currentIndex === index ? { ...banner, [field]: value } : banner)));
+  };
+
+  const saveBanners = () => {
+    localStorage.setItem('zeptorHeroBanners', JSON.stringify(banners));
+    setSaveMessage('Banner settings saved successfully.');
+    window.dispatchEvent(new Event('storage'));
+  };
+
+  const resetBanners = () => {
+    setBanners(defaultBannerConfigs);
+    localStorage.setItem('zeptorHeroBanners', JSON.stringify(defaultBannerConfigs));
+    setSaveMessage('Banner settings reset to default.');
+    window.dispatchEvent(new Event('storage'));
+  };
+
+  return (
+    <div className="mx-auto max-w-6xl px-4 pb-16 pt-10 sm:px-6 lg:px-8">
     <section className="rounded-[40px] border border-white/10 bg-[#0b0b13] p-8 shadow-card">
       <div className="flex flex-col gap-6 xl:flex-row xl:items-start xl:justify-between">
         <div className="max-w-3xl">
@@ -81,6 +132,47 @@ const AdminPage = () => (
               New action
               <ArrowRight className="h-4 w-4" />
             </button>
+          </div>
+          <div className="mt-6 rounded-[30px] border border-violet/20 bg-violet/5 p-5">
+            <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Home banner control</p>
+            <h3 className="mt-3 text-xl font-semibold text-white">Manage homepage slider</h3>
+            <div className="mt-5 space-y-4">
+              {banners.map((banner, index) => (
+                <div key={`${banner.title}-${index}`} className="rounded-[24px] border border-white/10 bg-[#12121b] p-4">
+                  <p className="text-[10px] uppercase tracking-[0.35em] text-silver/60">Slide {index + 1}</p>
+                  <div className="mt-3 grid gap-3">
+                    <input
+                      value={banner.title}
+                      onChange={(event) => updateBanner(index, 'title', event.target.value)}
+                      className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white outline-none placeholder:text-silver/40"
+                      placeholder="Banner title"
+                    />
+                    <textarea
+                      value={banner.subtitle}
+                      onChange={(event) => updateBanner(index, 'subtitle', event.target.value)}
+                      rows={2}
+                      className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white outline-none placeholder:text-silver/40"
+                      placeholder="Banner subtitle"
+                    />
+                    <input
+                      value={banner.image}
+                      onChange={(event) => updateBanner(index, 'image', event.target.value)}
+                      className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white outline-none placeholder:text-silver/40"
+                      placeholder="Image URL"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-5 flex flex-wrap gap-3">
+              <button type="button" onClick={saveBanners} className="btn-primary px-5 py-3 text-sm">
+                Save banners
+              </button>
+              <button type="button" onClick={resetBanners} className="btn-secondary px-5 py-3 text-sm">
+                Reset defaults
+              </button>
+            </div>
+            {saveMessage && <p className="mt-4 text-sm text-violet/80">{saveMessage}</p>}
           </div>
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             {quickActions.map((item) => (
@@ -207,6 +299,7 @@ const AdminPage = () => (
       </div>
     </div>
   </div>
-);
+  );
+};
 
 export default AdminPage;
