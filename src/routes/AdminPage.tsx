@@ -205,8 +205,8 @@ const AdminPage = () => {
                   </div>
                 </div>
                 <div className="mt-4 grid gap-3 sm:grid-cols-3 text-sm text-silver/80">
-                  <p>Fee: {session.entryFee}</p>
-                  <p>Prize: {session.prizePool}</p>
+                  <p>Entries: {session.entryOptions.length} options</p>
+                  <p>Starting at ₹{session.entryOptions[0].entryFee}</p>
                   <p>{session.teams}</p>
                 </div>
               </div>

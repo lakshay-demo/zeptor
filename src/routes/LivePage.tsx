@@ -4,19 +4,19 @@ import { Youtube, Clock3 } from 'lucide-react';
 const LivePage = () => {
   return (
     <div className="mx-auto max-w-7xl px-4 pb-16 pt-10 sm:px-6 lg:px-8">
-      <section className="rounded-[40px] border border-white/10 bg-[#0b0b13] p-8 shadow-card">
-        <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Zeptor Esports Live</p>
+      <section className="rounded-[40px] border border-violet/25 bg-gradient-to-br from-violet/5 to-purple/5 backdrop-blur p-8 shadow-[0_0_40px_rgba(168,85,247,0.15)]">
+        <p className="text-sm uppercase tracking-[0.35em] text-violet/80 font-semibold">Zeptor Esports Live</p>
         <h1 className="mt-4 text-4xl font-semibold text-white sm:text-5xl">Watch live BGMI matches and community streams</h1>
-        <p className="mt-4 max-w-2xl text-sm leading-7 text-silver/80 sm:text-base">
+        <p className="mt-4 max-w-2xl text-sm leading-7 text-silver-muted sm:text-base">
           Stay connected with live broadcasts, upcoming streams and curated event coverage for Zeptor competition.
         </p>
       </section>
 
       <div className="mt-10 grid gap-8 lg:grid-cols-[1.4fr_0.6fr]">
-        <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }} className="rounded-[40px] border border-white/10 bg-[#0f0f18] p-6 shadow-card">
+        <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }} className="rounded-[40px] border border-violet/20 bg-gradient-to-br from-violet/5 to-purple/5 backdrop-blur p-6 shadow-[0_0_40px_rgba(168,85,247,0.15)] hover:shadow-[0_0_60px_rgba(168,85,247,0.25)] transition-all duration-300">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <p className="text-sm uppercase tracking-[0.35em] text-violet/70">LIVE NOW</p>
+              <p className="text-sm uppercase tracking-[0.35em] text-violet/80 font-semibold">LIVE NOW</p>
               <h2 className="mt-3 text-3xl font-semibold text-white">Zeptor Season 1 stream</h2>
             </div>
             <div className="rounded-3xl bg-red-500/15 px-4 py-2 text-sm uppercase tracking-[0.35em] text-red-300">Live</div>

@@ -5,15 +5,24 @@ export type StatCard = {
   subtitle: string;
 };
 
+export type PrizeDistribution = {
+  rank: string;
+  amount: string;
+};
+
+export type EntryOption = {
+  entryFee: number;
+  prizePool: number;
+  prizeDistribution: PrizeDistribution[];
+};
+
 export type ScrimSession = {
   id: string;
   title: string;
   time: string;
-  entryFee: string;
-  prizePool: string;
   maps: string[];
   teams: string;
-  description: string;
+  entryOptions: EntryOption[];
 };
 
 export type Offer = {

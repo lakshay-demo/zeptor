@@ -26,13 +26,13 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'backdrop-frost border-b border-white/10 shadow-card py-3' : 'bg-transparent py-4'}`}>
+    <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'backdrop-frost border-b border-violet/20 shadow-card py-3' : 'bg-transparent py-4'}`}>
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link to="/" className="flex items-center gap-3 text-white">
+        <Link to="/" className="flex items-center gap-3 text-white hover:text-violet/80 transition">
           <img
             src={logoPoster}
             alt="Zeptor Esports logo"
-            className="h-12 w-12 rounded-2xl border border-violet/30 bg-black object-cover shadow-card"
+            className="h-12 w-12 rounded-2xl border border-violet/40 bg-gradient-to-br from-violet/10 to-purple/5 object-cover shadow-[0_0_30px_rgba(168,85,247,0.2)]"
           />
           <div>
             <p className="text-xs uppercase tracking-[0.4em] text-violet/70">Zeptor</p>
@@ -75,7 +75,7 @@ const Navbar = () => {
           type="button"
           aria-label="Open navigation menu"
           onClick={() => setIsOpen(true)}
-          className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 p-3 text-silver/80 transition hover:bg-white/10 lg:hidden"
+          className="inline-flex items-center justify-center rounded-full border border-violet/30 bg-violet/5 p-3 text-silver/70 transition hover:bg-violet/10 hover:text-violet hover:border-violet/50 lg:hidden"
         >
           <Menu size={22} />
         </button>
@@ -90,7 +90,7 @@ const Navbar = () => {
             className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm lg:hidden"
             onClick={() => setIsOpen(false)}
           >
-            <div className="absolute right-4 top-4 w-[calc(100%-2rem)] max-w-sm rounded-3xl border border-white/10 bg-[#07070d] p-6 shadow-card" onClick={(event) => event.stopPropagation()}>
+            <div className="absolute right-4 top-4 w-[calc(100%-2rem)] max-w-sm rounded-3xl border border-violet/20 bg-gradient-to-br from-violet/5 to-purple/5 backdrop-blur-xl p-6 shadow-[0_20px_60px_rgba(168,85,247,0.15)]" onClick={(event) => event.stopPropagation()}>
               <div className="mb-5 flex items-center justify-between">
                 <div>
                   <p className="text-xs uppercase tracking-[0.35em] text-violet/70">Menu</p>

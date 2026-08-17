@@ -62,12 +62,12 @@ const HomePage = () => {
 
   return (
     <div className="relative min-w-0 overflow-hidden px-4 pb-20 pt-8 sm:px-6 lg:px-8">
-      <div className="absolute inset-x-0 top-0 h-[560px] bg-[radial-gradient(circle_at_top,_rgba(139,92,246,0.18),_transparent_28%)]" />
+      <div className="absolute inset-x-0 top-0 h-[560px] bg-[radial-gradient(circle_at_top,_rgba(168,85,247,0.2),_transparent_35%)]"></div>
       <div className="relative mx-auto max-w-7xl">
         <section className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
           <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }} className="min-w-0 space-y-6 pb-8 pt-8">
             <div className="min-w-0">
-              <p className="text-base uppercase tracking-[0.42em] text-violet/70">Zeptor Esports</p>
+              <p className="text-base uppercase tracking-[0.42em] text-violet/80 font-semibold">Zeptor Esports</p>
               <h1 className="mt-4 max-w-3xl break-words text-5xl font-semibold leading-[1.02] text-white sm:text-6xl lg:text-7xl">
                 PLAY. COMPETE. <span className="gradient-text">DOMINATE.</span>
               </h1>
@@ -85,27 +85,27 @@ const HomePage = () => {
               </Link>
             </div>
             <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-              <div className="backdrop-frost rounded-3xl border border-white/10 p-5 shadow-card">
-                <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Next stream</p>
+              <div className="backdrop-frost rounded-3xl border border-violet/20 bg-gradient-to-br from-violet/5 to-purple/5 p-5 shadow-[0_0_30px_rgba(168,85,247,0.12)]">
+                <p className="text-sm uppercase tracking-[0.35em] text-violet/80 font-semibold">Next stream</p>
                 <p className="mt-4 text-lg font-semibold text-white">BGMI prime squad session</p>
-                <p className="mt-3 text-sm text-silver/80">Aug 12, 2026 • 8:00 PM IST</p>
+                <p className="mt-3 text-sm text-silver-muted">Aug 12, 2026 • 8:00 PM IST</p>
               </div>
-              <div className="backdrop-frost rounded-3xl border border-white/10 p-5 shadow-card">
-                <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Slot status</p>
+              <div className="backdrop-frost rounded-3xl border border-violet/20 bg-gradient-to-br from-violet/5 to-purple/5 p-5 shadow-[0_0_30px_rgba(168,85,247,0.12)]">
+                <p className="text-sm uppercase tracking-[0.35em] text-violet/80 font-semibold">Slot status</p>
                 <p className="mt-4 text-lg font-semibold text-white">20 / 24 teams registered</p>
-                <p className="mt-3 text-sm text-silver/80">Secure your place before the deadline.</p>
+                <p className="mt-3 text-sm text-silver-muted">Secure your place before the deadline.</p>
               </div>
-              <div className="backdrop-frost rounded-3xl border border-white/10 p-5 shadow-card">
-                <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Current mission</p>
+              <div className="backdrop-frost rounded-3xl border border-violet/20 bg-gradient-to-br from-violet/5 to-purple/5 p-5 shadow-[0_0_30px_rgba(168,85,247,0.12)]">
+                <p className="text-sm uppercase tracking-[0.35em] text-violet/80 font-semibold">Current mission</p>
                 <p className="mt-4 text-lg font-semibold text-white">Scale BGMI competition across India.</p>
-                <p className="mt-3 text-sm text-silver/80">Focused on teams, live events, and community growth.</p>
+                <p className="mt-3 text-sm text-silver-muted">Focused on teams, live events, and community growth.</p>
               </div>
             </div>
           </motion.div>
 
           <motion.div initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.45 }} className="min-w-0 space-y-6">
-            <div className="theme-panel rounded-[40px] p-3 sm:p-4 shadow-card">
-              <div className="relative overflow-hidden rounded-[28px] border border-violet/30 bg-[#05050a]">
+            <div className="theme-panel rounded-[40px] p-3 sm:p-4 shadow-[0_0_40px_rgba(168,85,247,0.15)]">
+              <div className="relative overflow-hidden rounded-[28px] border border-violet/25 bg-[#05050a]">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={currentSlide.title}
@@ -123,7 +123,7 @@ const HomePage = () => {
                     <div className="absolute inset-0 bg-gradient-to-r from-[#090b14]/90 via-[#090b14]/45 to-transparent" />
                     <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
                       <div className="max-w-md rounded-[24px] border border-white/10 bg-black/20 p-5 backdrop-blur-md">
-                        <p className="text-[10px] uppercase tracking-[0.35em] text-violet/80">Featured</p>
+                        <p className="text-[10px] uppercase tracking-[0.35em] text-violet/80 font-semibold">Featured</p>
                         <h2 className="mt-3 text-2xl font-semibold text-white sm:text-3xl">{currentSlide.title}</h2>
                         <p className="mt-3 text-sm leading-6 text-silver/80">{currentSlide.subtitle}</p>
                       </div>
@@ -138,25 +138,25 @@ const HomePage = () => {
                     type="button"
                     aria-label={`Show slide ${index + 1}`}
                     onClick={() => setActiveSlide(index)}
-                    className={`h-2.5 rounded-full transition-all ${index === activeSlide ? 'w-8 bg-violet' : 'w-2.5 bg-white/25 hover:bg-white/40'}`}
+                    className={`h-2.5 rounded-full transition-all ${index === activeSlide ? 'w-8 bg-gradient-to-r from-violet to-purple' : 'w-2.5 bg-white/20 hover:bg-violet/40'}`}
                   />
                 ))}
               </div>
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
                 {promos.map((promo) => (
-                  <div key={promo.id} className="min-h-[220px] rounded-[28px] border border-white/10 bg-[#0b0b12] p-5 shadow-card sm:min-h-[240px]">
+                  <div key={promo.id} className="min-h-[220px] rounded-[28px] border border-violet/20 bg-gradient-to-br from-violet/5 to-purple/5 p-5 shadow-[0_0_30px_rgba(168,85,247,0.12)] hover:shadow-[0_0_50px_rgba(168,85,247,0.25)] transition-all duration-300 sm:min-h-[240px]">
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0">
-                        <p className="text-[10px] uppercase tracking-[0.25em] text-violet/70 sm:text-[11px]">{promo.title}</p>
+                        <p className="text-[10px] uppercase tracking-[0.25em] text-violet/80 font-semibold sm:text-[11px]">{promo.title}</p>
                         <p className="mt-2 text-2xl font-semibold text-white sm:text-3xl">{promo.offerPrice}</p>
                       </div>
-                      <span className="shrink-0 rounded-full bg-violet/10 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-violet sm:text-[11px]">{promo.discount}</span>
+                      <span className="shrink-0 rounded-full bg-gradient-to-r from-violet/20 to-purple/10 border border-violet/30 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-violet sm:text-[11px]">{promo.discount}</span>
                     </div>
 
                     <div className="mt-5 space-y-3">
-                      <p className="text-sm leading-6 text-silver/80">{promo.description}</p>
-                      <div className="flex items-center justify-between gap-3 border-t border-white/5 pt-3">
-                        <span className="text-sm text-silver/50 line-through">{promo.regularPrice}</span>
+                      <p className="text-sm leading-6 text-silver-muted">{promo.description}</p>
+                      <div className="flex items-center justify-between gap-3 border-t border-violet/10 pt-3">
+                        <span className="text-sm text-silver-muted line-through">{promo.regularPrice}</span>
                         <span className="text-sm font-medium text-violet">Save {promo.discount}</span>
                       </div>
                     </div>
@@ -219,17 +219,20 @@ const HomePage = () => {
                     <h3 className="mt-3 text-xl font-semibold text-white">{session.title}</h3>
                   </div>
                 </div>
-                <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                  <div className="rounded-3xl bg-white/5 p-4">
-                    <p className="text-sm text-silver/80">Entry Fee</p>
-                    <p className="mt-2 text-lg font-semibold text-white">{session.entryFee}</p>
-                  </div>
-                  <div className="rounded-3xl bg-white/5 p-4">
-                    <p className="text-sm text-silver/80">Prize Pool</p>
-                    <p className="mt-2 text-lg font-semibold text-white">{session.prizePool}</p>
+                <div className="mt-6">
+                  <p className="text-xs uppercase tracking-[0.35em] text-silver/80 mb-3">Entry options</p>
+                  <div className="space-y-2">
+                    {session.entryOptions.map((option) => (
+                      <div key={option.entryFee} className="flex items-center justify-between text-sm bg-white/5 rounded-lg p-3">
+                        <div>
+                          <span className="font-semibold text-white">₹{option.entryFee}</span>
+                          <span className="text-silver/70 ml-2">→</span>
+                          <span className="text-silver/80 ml-2">₹{option.prizePool} Pool</span>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
-                <div className="mt-5 text-sm text-silver/80">{session.description}</div>
                 <div className="mt-5 flex flex-wrap gap-2 text-xs uppercase tracking-[0.22em] text-violet/70">
                   {session.maps.map((map) => (
                     <span key={map} className="rounded-full bg-white/5 px-3 py-2">{map}</span>
@@ -237,14 +240,9 @@ const HomePage = () => {
                 </div>
                 <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
                   <span className="text-sm text-silver/80">{session.teams}</span>
-                  <div className="flex gap-3">
-                    <Link to="/scrims" className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-silver transition hover:bg-violet/10 hover:text-white">
-                      VIEW DETAILS
-                    </Link>
-                    <Link to="/scrims" className="rounded-full bg-violet px-4 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5">
-                      JOIN SCRIM
-                    </Link>
-                  </div>
+                  <Link to="/scrims" className="rounded-full bg-violet px-4 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5">
+                    VIEW SCRIMS →
+                  </Link>
                 </div>
               </motion.div>
             ))}

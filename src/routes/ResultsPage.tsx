@@ -11,10 +11,10 @@ const ResultsPage = () => {
 
   return (
     <div className="mx-auto max-w-7xl px-4 pb-16 pt-10 sm:px-6 lg:px-8">
-      <section className="rounded-[40px] border border-white/10 bg-[#0b0b13] p-8 shadow-card">
-        <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Latest Results</p>
+      <section className="rounded-[40px] border border-violet/25 bg-gradient-to-br from-violet/5 to-purple/5 backdrop-blur p-8 shadow-[0_0_40px_rgba(168,85,247,0.15)]">
+        <p className="text-sm uppercase tracking-[0.35em] text-violet/80 font-semibold">Latest Results</p>
         <h1 className="mt-4 text-4xl font-semibold text-white sm:text-5xl">Recent winners and tournament outcomes</h1>
-        <p className="mt-4 max-w-2xl text-sm leading-7 text-silver/80 sm:text-base">
+        <p className="mt-4 max-w-2xl text-sm leading-7 text-silver-muted sm:text-base">
           Track results from daily scrims and tournaments, with a clean esports scoreboard for teams and champions.
         </p>
       </section>
@@ -24,10 +24,10 @@ const ResultsPage = () => {
           <div className="rounded-[36px] border border-white/10 bg-[#0f0f18] p-6 shadow-card">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
-                <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Filter results</p>
+                <p className="text-sm uppercase tracking-[0.35em] text-violet/80 font-semibold">Filter results</p>
                 <h2 className="mt-3 text-2xl font-semibold text-white">Find the right event type</h2>
               </div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-silver/80">
+              <div className="inline-flex items-center gap-2 rounded-full border border-violet/20 bg-gradient-to-r from-violet/10 to-purple/5 px-4 py-2 text-sm text-silver-muted">
                 <Filter size={18} />
                 {activeFilter}
               </div>
@@ -37,7 +37,7 @@ const ResultsPage = () => {
                 <button
                   key={filter}
                   onClick={() => setActiveFilter(filter)}
-                  className={`rounded-full px-4 py-2 text-sm font-semibold transition ${activeFilter === filter ? 'bg-violet text-white' : 'bg-white/5 text-silver/80 hover:bg-white/10'}`}
+                  className={`rounded-full px-4 py-2 text-sm font-semibold transition ${activeFilter === filter ? 'bg-violet text-white' : 'bg-gradient-to-r from-violet/10 to-purple/5 border border-violet/20 text-silver-muted hover:bg-violet/15 hover:border-violet/30'}`}
                 >
                   {filter}
                 </button>
@@ -48,13 +48,13 @@ const ResultsPage = () => {
           <div className="grid gap-6">
             {filtered.length > 0 ? (
               filtered.map((item) => (
-                <motion.div key={item.id} initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }} className="rounded-[36px] border border-white/10 bg-[#0f0f18] p-6 shadow-card">
+                <motion.div key={item.id} initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }} className="rounded-[36px] border border-violet/20 bg-gradient-to-br from-violet/5 to-purple/5 backdrop-blur p-6 shadow-[0_0_30px_rgba(168,85,247,0.12)] hover:shadow-[0_0_50px_rgba(168,85,247,0.25)] transition-all duration-300">
                   <div className="flex items-center justify-between gap-3">
                     <div>
-                      <p className="text-xs uppercase tracking-[0.35em] text-violet/70">{item.category}</p>
+                      <p className="text-xs uppercase tracking-[0.35em] text-violet/80 font-semibold">{item.category}</p>
                       <h3 className="mt-3 text-2xl font-semibold text-white">{item.event}</h3>
                     </div>
-                    <div className="rounded-full bg-white/5 px-4 py-2 text-sm font-semibold text-silver/80">{item.date}</div>
+                    <div className="rounded-full bg-gradient-to-r from-violet/10 to-purple/5 border border-violet/20 px-4 py-2 text-sm font-semibold text-silver-muted">{item.date}</div>
                   </div>
                   <div className="mt-5 grid gap-4 sm:grid-cols-3 text-sm text-silver/80">
                     <div className="rounded-3xl bg-white/5 p-4">
@@ -73,7 +73,7 @@ const ResultsPage = () => {
                 </motion.div>
               ))
             ) : (
-              <div className="rounded-[36px] border border-white/10 bg-[#0f0f18] p-10 text-center text-sm text-silver/80">
+              <div className="rounded-[36px] border border-violet/20 bg-gradient-to-br from-violet/5 to-purple/5 p-10 text-center text-sm text-silver-muted">
                 No results published yet. Check back soon.
               </div>
             )}
@@ -84,9 +84,9 @@ const ResultsPage = () => {
           <div className="rounded-[36px] border border-white/10 bg-[#0f0f18] p-6 shadow-card">
             <div className="flex items-center gap-3 text-violet">
               <Trophy size={20} />
-              <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Performance</p>
+              <p className="text-sm uppercase tracking-[0.35em] text-violet/80 font-semibold">Performance</p>
             </div>
-            <p className="mt-4 text-sm leading-7 text-silver/80">Highlight the highest prize pools, recent champions and the teams setting the pace in Zeptor competition.</p>
+            <p className="mt-4 text-sm leading-7 text-silver-muted">Highlight the highest prize pools, recent champions and the teams setting the pace in Zeptor competition.</p>
           </div>
         </aside>
       </section>
