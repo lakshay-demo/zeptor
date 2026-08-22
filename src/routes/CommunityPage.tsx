@@ -8,7 +8,7 @@ const CommunityPage = () => (
       <p className="text-sm uppercase tracking-[0.35em] text-violet/80 font-semibold">Community</p>
       <h1 className="mt-4 text-4xl font-semibold text-white sm:text-5xl">Join the Zeptor Esports community</h1>
       <p className="mt-4 max-w-2xl text-sm leading-7 text-silver-muted sm:text-base">
-        Stay updated with daily scrims, tournaments, player opportunities, recruitment, live streams and competitive BGMI events.
+        Stay updated with daily scrims, slot announcements, room details and competitive BGMI match updates.
       </p>
     </section>
 
@@ -24,7 +24,7 @@ const CommunityPage = () => (
         <div className="mt-8 grid gap-5 sm:grid-cols-2">
           <div className="rounded-[32px] bg-gradient-to-br from-violet/5 to-purple/5 border border-violet/20 p-6">
             <p className="text-sm uppercase tracking-[0.35em] text-violet/80 font-semibold">What you get</p>
-            <p className="mt-4 text-sm leading-7 text-silver-muted">Daily scrim invites, tournament alerts, recruitment support and event announcements.</p>
+            <p className="mt-4 text-sm leading-7 text-silver-muted">Daily scrim invites, room alerts, recruitment support and match announcements.</p>
           </div>
           <div className="rounded-[32px] bg-gradient-to-br from-violet/5 to-purple/5 border border-violet/20 p-6">
             <p className="text-sm uppercase tracking-[0.35em] text-violet/80 font-semibold">Why join</p>
@@ -41,7 +41,7 @@ const CommunityPage = () => (
             <h2 className="mt-2 text-3xl font-semibold text-white">JOIN WHATSAPP COMMUNITY</h2>
           </div>
         </div>
-        <p className="mt-6 text-sm leading-7 text-silver-muted">Access daily updates, link with teams and secure fast support for scrims or tournament entries.</p>
+        <p className="mt-6 text-sm leading-7 text-silver-muted">Access daily updates, link with teams and secure fast support for scrim registration.</p>
         <a href={siteConfig.whatsappCommunity} target="_blank" rel="noreferrer" className="mt-8 inline-flex w-full items-center justify-center btn-primary px-6 py-4 text-sm">
           Join WhatsApp Community
         </a>

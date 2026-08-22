@@ -62,10 +62,11 @@ const ScrimDetailsPage = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1, duration: 0.3 }}
+                whileHover={{ y: -4, scale: 1.01 }}
                 onClick={() => setSelectedOption(idx)}
-                className={`rounded-[32px] p-6 cursor-pointer border-2 transition-all duration-200 ${
+                className={`premium-card rounded-[32px] p-6 cursor-pointer border-2 transition-all duration-200 ${
                   selectedOption === idx
-                    ? 'border-violet bg-violet/10'
+                    ? 'border-violet bg-violet/10 shadow-[0_0_30px_rgba(168,85,247,0.18)]'
                     : 'border-white/10 bg-[#0f0f18] hover:border-violet/50'
                 }`}
               >
@@ -88,12 +89,21 @@ const ScrimDetailsPage = () => {
                     </div>
                   </div>
 
+                  <div className="mt-3 flex items-center justify-between">
+                    <span className="text-xs uppercase tracking-[0.3em] text-silver/60">
+                      {selectedOption === idx ? 'Selected' : 'Choose option'}
+                    </span>
+                    <span className={`flex h-6 w-6 items-center justify-center rounded-full border text-[10px] ${selectedOption === idx ? 'border-violet bg-violet text-white' : 'border-white/20 text-silver/50'}`}>
+                      {selectedOption === idx ? '✓' : ''}
+                    </span>
+                  </div>
+
                   {selectedOption === idx && (
                     <a 
                       href={whatsappRegistrationLink(session.title, option.entryFee)} 
                       target="_blank" 
                       rel="noreferrer" 
-                      className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-violet px-4 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5"
+                      className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-violet px-4 py-3 text-sm font-semibold text-white transition duration-200 hover:-translate-y-0.5 hover:scale-[1.01] hover:shadow-[0_0_28px_rgba(168,85,247,0.35)] active:scale-95"
                     >
                       REGISTER NOW
                     </a>

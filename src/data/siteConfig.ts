@@ -10,5 +10,5 @@ export const siteConfig: SiteConfig = {
   contactPhone: '+91 9896620842',
   scrimRegistrationPhone: '+91 9896620842',
   brandStatement:
-    'An upcoming competitive BGMI esports organization building a structured tournament and scrim ecosystem for Indian teams and players.',
+    'A professional BGMI daily scrims platform with reliable rooms and competitive match management for Indian teams and players.',
 };

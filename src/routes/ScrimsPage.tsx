@@ -67,7 +67,8 @@ const ScrimsPage = () => {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.05, duration: 0.35 }}
-              className="rounded-[36px] border border-violet/20 bg-gradient-to-br from-violet/5 to-purple/5 backdrop-blur p-6 shadow-[0_0_30px_rgba(168,85,247,0.12)] hover:shadow-[0_0_50px_rgba(168,85,247,0.25)] hover:border-violet/35 transition-all duration-300"
+              whileHover={{ y: -6, scale: 1.01 }}
+              className="premium-card rounded-[36px] border border-violet/20 bg-gradient-to-br from-violet/5 to-purple/5 backdrop-blur p-6 shadow-[0_0_30px_rgba(168,85,247,0.12)] hover:border-violet/40 hover:shadow-[0_0_50px_rgba(168,85,247,0.25)] transition-all duration-300"
             >
               <div className="flex flex-col gap-4">
                 <div>
@@ -85,13 +86,13 @@ const ScrimsPage = () => {
                 <p className="text-sm font-semibold text-silver/80">Choose your entry:</p>
                 <div className="grid gap-3 sm:grid-cols-3">
                   {session.entryOptions.map((option) => (
-                    <div key={option.entryFee} className="rounded-3xl border border-violet/20 bg-white/5 p-5 hover:bg-violet/10 transition-colors">
+                    <div key={option.entryFee} className="group rounded-3xl border border-violet/20 bg-white/5 p-5 transition-all duration-200 hover:-translate-y-1 hover:border-violet/50 hover:bg-violet/10 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)]">
                       <div className="flex flex-col gap-2">
                         <div>
                           <p className="text-sm font-semibold text-white">₹{option.entryFee} Entry</p>
-                          <p className="mt-1 text-xs text-silver/70">Prize Pool: ₹{option.prizePool}</p>
+                          <p className="mt-1 text-xs text-silver/70">Prize Pool: <span className="text-violet value-highlight">₹{option.prizePool}</span></p>
                         </div>
-                        <a href={whatsappRegistrationLink(session.title, option.entryFee)} target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center justify-center rounded-full bg-violet px-4 py-2 text-xs font-semibold text-white transition hover:-translate-y-0.5">
+                        <a href={whatsappRegistrationLink(session.title, option.entryFee)} target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center justify-center rounded-full bg-violet px-4 py-2 text-xs font-semibold text-white transition duration-200 hover:-translate-y-0.5 hover:scale-[1.02] hover:shadow-[0_0_28px_rgba(168,85,247,0.35)] active:scale-95">
                           BOOK SLOT →
                         </a>
                       </div>
@@ -111,14 +112,14 @@ const ScrimsPage = () => {
           <div className="rounded-[36px] border border-violet/20 bg-gradient-to-br from-violet/5 to-purple/5 backdrop-blur p-6 shadow-[0_0_30px_rgba(168,85,247,0.12)] hover:shadow-[0_0_50px_rgba(168,85,247,0.25)] transition-all duration-300">
             <div className="flex items-center gap-3 text-violet">
               <ShieldCheck size={20} />
-              <p className="text-sm uppercase tracking-[0.35em] text-violet/80 font-semibold">Tournament-ready format</p>
+              <p className="text-sm uppercase tracking-[0.35em] text-violet/80 font-semibold">Professional room format</p>
             </div>
             <div className="mt-5 space-y-3 text-sm leading-7 text-silver/80">
               <p>Lobby Size: 16–18 Teams</p>
               <p>Advance Room</p>
               <p>Stream + Casting</p>
               <p>Maps: Erangel, Miramar and Rondo</p>
-              <p>Bonus Reward: Back-to-Back WWCD • 65+ total kills • ₹200</p>
+              <p>Room details and support are shared through WhatsApp.</p>
             </div>
           </div>
           <div className="rounded-[36px] border border-violet/20 bg-gradient-to-br from-violet/5 to-purple/5 backdrop-blur p-6 shadow-[0_0_30px_rgba(168,85,247,0.12)] hover:shadow-[0_0_50px_rgba(168,85,247,0.25)] transition-all duration-300">

@@ -1,403 +1,137 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowRight, ShieldCheck, Sparkles, Trophy } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Clock3, Crosshair, Instagram, MessageCircle, Radio, ShieldCheck, Trophy, Users, Youtube } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import heroScrimsPoster from '../assets/posters/WhatsApp Image 2026-08-11 at 11.34.56 PM (1).jpeg';
 import heroRecruitmentPoster from '../assets/posters/WhatsApp Image 2026-08-11 at 11.34.56 PM (2).jpeg';
-import heroTournamentPoster from '../assets/posters/WhatsApp Image 2026-08-11 at 11.34.56 PM.jpeg';
-import { featuredTournament } from '../data/tournaments';
+import heroScrimsPoster from '../assets/posters/WhatsApp Image 2026-08-11 at 11.34.56 PM (1).jpeg';
 import { leaderboardTeams } from '../data/leaderboard';
-import { news } from '../data/news';
 import { results } from '../data/results';
-import { promos, scrimSessions } from '../data/scrims';
+import { scrimSessions } from '../data/scrims';
 import { siteConfig } from '../data/siteConfig';
-import { stats } from '../data/stats';
+import { getVisitorSummary } from '../lib/visitorTracker';
 
-type HeroBanner = {
-  image: string;
-  title: string;
-  subtitle: string;
-};
+type HeroBanner = { image: string; title: string };
 
-const defaultBannerSlides: HeroBanner[] = [
-  { image: heroScrimsPoster, title: 'Zeptor Daily Scrims', subtitle: 'Daily competitive BGMI practice with elite squad battles and high-intensity scrim formats.' },
-  { image: heroRecruitmentPoster, title: 'Zeptor Recruitment', subtitle: 'Build your roster, discover top talent, and compete with a serious esports pipeline.' },
-  { image: heroTournamentPoster, title: 'Zeptor Tournament', subtitle: 'Seasonal events, prize pools, and a streamlined format built for dedicated Indian teams.' },
+const defaultBanners: HeroBanner[] = [
+  { image: heroScrimsPoster, title: 'Zeptor daily scrims' },
+  { image: heroRecruitmentPoster, title: 'Zeptor team recruitment' },
 ];
 
-const sectionTitle = (title: string, subtitle: string) => (
-  <div className="mb-8 max-w-2xl">
-    <p className="text-sm uppercase tracking-[0.35em] text-violet/60">{title}</p>
-    <h2 className="mt-3 text-3xl font-semibold text-white sm:text-4xl">{subtitle}</h2>
-  </div>
+const entryColors = ['border-white/10', 'border-violet/40', 'border-bright/50'];
+
+const Reveal = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => (
+  <motion.div initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15 }} transition={{ delay, duration: 0.4 }}>
+    {children}
+  </motion.div>
 );
 
 const HomePage = () => {
-  const [posterSlides, setPosterSlides] = useState<HeroBanner[]>(defaultBannerSlides);
-  const [activeSlide, setActiveSlide] = useState(0);
+  const [banners, setBanners] = useState<HeroBanner[]>(defaultBanners);
+  const [activeBanner, setActiveBanner] = useState(0);
+  const [visitorCount, setVisitorCount] = useState(0);
 
   useEffect(() => {
-    const savedSlides = localStorage.getItem('zeptorHeroBanners');
-    if (savedSlides) {
-      try {
-        const parsed = JSON.parse(savedSlides) as HeroBanner[];
-        if (Array.isArray(parsed) && parsed.length) {
-          setPosterSlides(parsed);
-        }
-      } catch {
-        // ignore invalid localStorage data
-      }
+    const stored = localStorage.getItem('zeptorHeroBanners');
+    if (!stored) return;
+    try {
+      const parsed = JSON.parse(stored) as HeroBanner[];
+      if (Array.isArray(parsed) && parsed.length > 0 && parsed.every((banner) => banner.image)) setBanners(parsed);
+    } catch {
+      setBanners(defaultBanners);
     }
   }, []);
 
   useEffect(() => {
-    const timer = window.setInterval(() => {
-      setActiveSlide((current) => (current + 1) % posterSlides.length);
-    }, 4200);
-
+    const timer = window.setInterval(() => setActiveBanner((current) => (current + 1) % banners.length), 5000);
     return () => window.clearInterval(timer);
-  }, [posterSlides.length]);
+  }, [banners.length]);
 
-  const currentSlide = posterSlides[activeSlide] || defaultBannerSlides[0];
+  useEffect(() => {
+    const refresh = () => setVisitorCount(getVisitorSummary().activeVisitors);
+    refresh();
+    const timer = window.setInterval(refresh, 15000);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const dailyResults = results.filter((result) => result.category === 'Daily Scrim');
 
   return (
-    <div className="relative min-w-0 overflow-hidden px-4 pb-20 pt-8 sm:px-6 lg:px-8">
-      <div className="absolute inset-x-0 top-0 h-[560px] bg-[radial-gradient(circle_at_top,_rgba(168,85,247,0.2),_transparent_35%)]"></div>
-      <div className="relative mx-auto max-w-7xl">
-        <section className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-          <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }} className="min-w-0 space-y-6 pb-8 pt-8">
-            <div className="min-w-0">
-              <p className="text-base uppercase tracking-[0.42em] text-violet/80 font-semibold">Zeptor Esports</p>
-              <h1 className="mt-4 max-w-3xl break-words text-5xl font-semibold leading-[1.02] text-white sm:text-6xl lg:text-7xl">
-                PLAY. COMPETE. <span className="gradient-text">DOMINATE.</span>
-              </h1>
-            </div>
-            <p className="max-w-2xl break-words text-base leading-8 text-silver/80 sm:text-lg">
-              India-focused competitive BGMI tournaments, daily scrims and esports opportunities built for serious teams.
-            </p>
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <Link to="/scrims" className="btn-primary px-6 py-4 text-sm sm:text-base">
-                JOIN DAILY SCRIMS
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-              <Link to="/tournaments" className="btn-secondary px-6 py-4 text-sm sm:text-base">
-                EXPLORE TOURNAMENTS
-              </Link>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-              <div className="backdrop-frost rounded-3xl border border-violet/20 bg-gradient-to-br from-violet/5 to-purple/5 p-5 shadow-[0_0_30px_rgba(168,85,247,0.12)]">
-                <p className="text-sm uppercase tracking-[0.35em] text-violet/80 font-semibold">Next stream</p>
-                <p className="mt-4 text-lg font-semibold text-white">BGMI prime squad session</p>
-                <p className="mt-3 text-sm text-silver-muted">Aug 12, 2026 • 8:00 PM IST</p>
-              </div>
-              <div className="backdrop-frost rounded-3xl border border-violet/20 bg-gradient-to-br from-violet/5 to-purple/5 p-5 shadow-[0_0_30px_rgba(168,85,247,0.12)]">
-                <p className="text-sm uppercase tracking-[0.35em] text-violet/80 font-semibold">Slot status</p>
-                <p className="mt-4 text-lg font-semibold text-white">20 / 24 teams registered</p>
-                <p className="mt-3 text-sm text-silver-muted">Secure your place before the deadline.</p>
-              </div>
-              <div className="backdrop-frost rounded-3xl border border-violet/20 bg-gradient-to-br from-violet/5 to-purple/5 p-5 shadow-[0_0_30px_rgba(168,85,247,0.12)]">
-                <p className="text-sm uppercase tracking-[0.35em] text-violet/80 font-semibold">Current mission</p>
-                <p className="mt-4 text-lg font-semibold text-white">Scale BGMI competition across India.</p>
-                <p className="mt-3 text-sm text-silver-muted">Focused on teams, live events, and community growth.</p>
-              </div>
+    <div className="home-shell">
+      <section className="hero-grid mx-auto max-w-7xl px-4 pb-20 pt-12 sm:px-6 lg:px-8 lg:pt-20">
+        <div className="relative z-10 max-w-3xl self-center">
+          <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }}>
+            <p className="eyebrow"><span className="status-dot" /> Professional BGMI scrims platform</p>
+            <h1 className="hero-heading mt-5">ZEPTOR<br /><span>ESPORTS</span></h1>
+            <p className="hero-kicker mt-5">DAILY BGMI SCRIMS FOR SERIOUS TEAMS.</p>
+            <p className="mt-5 max-w-xl text-base leading-8 text-silver sm:text-lg">Compete in reliable daily custom rooms with affordable entry fees, fixed lobbies and professional match management.</p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link to="/scrims" className="btn-primary px-6 py-4 text-sm"><Crosshair size={17} /> Book a scrim slot <ArrowRight size={16} /></Link>
+              <a href={siteConfig.whatsappCommunity} target="_blank" rel="noreferrer" className="btn-secondary px-6 py-4 text-sm"><MessageCircle size={17} /> Join community</a>
             </div>
           </motion.div>
-
-          <motion.div initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.45 }} className="min-w-0 space-y-6">
-            <div className="theme-panel rounded-[40px] p-3 sm:p-4 shadow-[0_0_40px_rgba(168,85,247,0.15)]">
-              <div className="relative overflow-hidden rounded-[28px] border border-violet/25 bg-[#05050a]">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={currentSlide.title}
-                    initial={{ opacity: 0, x: 26 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -26 }}
-                    transition={{ duration: 0.45 }}
-                    className="relative"
-                  >
-                    <img
-                      src={currentSlide.image}
-                      alt={currentSlide.title}
-                      className="h-[420px] w-full object-cover sm:h-[500px] lg:h-[620px]"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#090b14]/90 via-[#090b14]/45 to-transparent" />
-                    <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
-                      <div className="max-w-md rounded-[24px] border border-white/10 bg-black/20 p-5 backdrop-blur-md">
-                        <p className="text-[10px] uppercase tracking-[0.35em] text-violet/80 font-semibold">Featured</p>
-                        <h2 className="mt-3 text-2xl font-semibold text-white sm:text-3xl">{currentSlide.title}</h2>
-                        <p className="mt-3 text-sm leading-6 text-silver/80">{currentSlide.subtitle}</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-              <div className="mt-4 flex items-center justify-center gap-2">
-                {posterSlides.map((slide, index) => (
-                  <button
-                    key={`${slide.title}-${index}`}
-                    type="button"
-                    aria-label={`Show slide ${index + 1}`}
-                    onClick={() => setActiveSlide(index)}
-                    className={`h-2.5 rounded-full transition-all ${index === activeSlide ? 'w-8 bg-gradient-to-r from-violet to-purple' : 'w-2.5 bg-white/20 hover:bg-violet/40'}`}
-                  />
-                ))}
-              </div>
-              <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                {promos.map((promo) => (
-                  <div key={promo.id} className="min-h-[220px] rounded-[28px] border border-violet/20 bg-gradient-to-br from-violet/5 to-purple/5 p-5 shadow-[0_0_30px_rgba(168,85,247,0.12)] hover:shadow-[0_0_50px_rgba(168,85,247,0.25)] transition-all duration-300 sm:min-h-[240px]">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="min-w-0">
-                        <p className="text-[10px] uppercase tracking-[0.25em] text-violet/80 font-semibold sm:text-[11px]">{promo.title}</p>
-                        <p className="mt-2 text-2xl font-semibold text-white sm:text-3xl">{promo.offerPrice}</p>
-                      </div>
-                      <span className="shrink-0 rounded-full bg-gradient-to-r from-violet/20 to-purple/10 border border-violet/30 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-violet sm:text-[11px]">{promo.discount}</span>
-                    </div>
-
-                    <div className="mt-5 space-y-3">
-                      <p className="text-sm leading-6 text-silver-muted">{promo.description}</p>
-                      <div className="flex items-center justify-between gap-3 border-t border-violet/10 pt-3">
-                        <span className="text-sm text-silver-muted line-through">{promo.regularPrice}</span>
-                        <span className="text-sm font-medium text-violet">Save {promo.discount}</span>
-                      </div>
-                    </div>
-
-                    <p className="mt-4 text-[10px] uppercase tracking-[0.25em] text-silver/60 sm:text-[11px]">
-                      Ends {new Date(promo.expiresAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-1">
-              <div className="rounded-[36px] border border-white/10 bg-[#0f0f18] p-6 shadow-card">
-                <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Audience</p>
-                <p className="mt-4 text-4xl font-semibold text-white">1.2K</p>
-                <p className="mt-2 text-sm text-silver/80">Competitive commentary and squad insights</p>
-              </div>
-              <div className="rounded-[36px] border border-white/10 bg-[#0f0f18] p-6 shadow-card">
-                <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Next event</p>
-                <p className="mt-4 text-4xl font-semibold text-white">Zeptor Season 1</p>
-                <p className="mt-2 text-sm text-silver/80">128 team bracket opening soon</p>
-              </div>
-            </div>
-          </motion.div>
-        </section>
-
-        <section className="mt-16">
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {stats.map((item, idx) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.05, duration: 0.35 }}
-                className="backdrop-frost rounded-[32px] border border-white/10 p-6 shadow-card"
-              >
-                <p className="text-sm uppercase tracking-[0.35em] text-violet/70">{item.label}</p>
-                <p className="mt-5 text-4xl font-semibold text-white">{item.value}</p>
-                <p className="mt-3 text-sm leading-6 text-silver/80">{item.subtitle}</p>
-              </motion.div>
-            ))}
+          <div className="mt-12 grid max-w-2xl grid-cols-3 gap-3 border-t border-white/10 pt-6">
+            <div><p className="metric-value">4</p><p className="metric-label">Daily slots</p></div>
+            <div><p className="metric-value">₹25</p><p className="metric-label">Entry from</p></div>
+            <div><p className="metric-value">16</p><p className="metric-label">Team lobby</p></div>
           </div>
-        </section>
+        </div>
 
-        <section className="mt-16">
-          {sectionTitle('Daily Scrims', 'Zeptor Daily Scrims')}
-          <div className="grid gap-5 lg:grid-cols-2">
-            {scrimSessions.map((session) => (
-              <motion.div
-                key={session.id}
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.35 }}
-                className="group rounded-[32px] border border-white/10 bg-[#0b0b11] p-6 shadow-card transition hover:-translate-y-1"
-              >
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.35em] text-violet/70">{session.time}</p>
-                    <h3 className="mt-3 text-xl font-semibold text-white">{session.title}</h3>
-                  </div>
-                </div>
-                <div className="mt-6">
-                  <p className="text-xs uppercase tracking-[0.35em] text-silver/80 mb-3">Entry options</p>
-                  <div className="space-y-2">
-                    {session.entryOptions.map((option) => (
-                      <div key={option.entryFee} className="flex items-center justify-between text-sm bg-white/5 rounded-lg p-3">
-                        <div>
-                          <span className="font-semibold text-white">₹{option.entryFee}</span>
-                          <span className="text-silver/70 ml-2">→</span>
-                          <span className="text-silver/80 ml-2">₹{option.prizePool} Pool</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="mt-5 flex flex-wrap gap-2 text-xs uppercase tracking-[0.22em] text-violet/70">
-                  {session.maps.map((map) => (
-                    <span key={map} className="rounded-full bg-white/5 px-3 py-2">{map}</span>
-                  ))}
-                </div>
-                <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
-                  <span className="text-sm text-silver/80">{session.teams}</span>
-                  <Link to="/scrims" className="rounded-full bg-violet px-4 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5">
-                    VIEW SCRIMS →
-                  </Link>
-                </div>
-              </motion.div>
-            ))}
+        <div className="hero-poster relative mt-12 lg:mt-0">
+          <AnimatePresence mode="wait">
+            <motion.img key={banners[activeBanner]?.image} src={banners[activeBanner]?.image || defaultBanners[0].image} alt={banners[activeBanner]?.title || 'Zeptor Esports'} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.45 }} />
+          </AnimatePresence>
+          <div className="poster-controls">
+            {banners.map((banner, index) => <button key={`${banner.title}-${index}`} type="button" aria-label={`Show banner ${index + 1}`} onClick={() => setActiveBanner(index)} className={index === activeBanner ? 'active' : ''} />)}
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="mt-20">
-          <div className="rounded-[40px] border border-white/10 bg-[#0d0d16] p-8 shadow-card">
-            <div className="flex flex-col gap-6 xl:flex-row xl:items-center xl:justify-between">
-              <div className="max-w-3xl">
-                <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Featured Tournament</p>
-                <h2 className="mt-3 text-4xl font-semibold text-white">{featuredTournament.name}</h2>
-                <p className="mt-4 text-base leading-7 text-silver/80">{featuredTournament.summary}</p>
-              </div>
-              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                <div className="rounded-3xl bg-white/5 p-5 text-center">
-                  <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Prize</p>
-                  <p className="mt-2 text-2xl font-semibold text-white">{featuredTournament.prizePool}</p>
-                </div>
-                <div className="rounded-3xl bg-white/5 p-5 text-center">
-                  <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Slots</p>
-                  <p className="mt-2 text-2xl font-semibold text-white">{featuredTournament.slots}</p>
-                </div>
-                <div className="rounded-3xl bg-white/5 p-5 text-center">
-                  <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Registered</p>
-                  <p className="mt-2 text-2xl font-semibold text-white">{featuredTournament.registeredTeams}</p>
-                </div>
-                <div className="rounded-3xl bg-white/5 p-5 text-center">
-                  <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Status</p>
-                  <p className="mt-2 text-2xl font-semibold text-white">{featuredTournament.status}</p>
-                </div>
-              </div>
-            </div>
-            <div className="mt-6 flex flex-wrap items-center gap-4">
-              <Link to="/tournaments" className="rounded-full bg-violet px-6 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5">
-                VIEW TOURNAMENT
-              </Link>
-              <p className="text-sm text-silver/70">Registration deadline • {featuredTournament.deadline}</p>
-            </div>
-          </div>
-        </section>
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="activity-strip">
+          <div className="activity-lead"><Radio size={17} /><div><p className="eyebrow">Zeptor live activity</p><p className="mt-1 text-sm text-silver">Live signals from this browser session</p></div></div>
+          <div className="activity-stat"><span className="live-dot" /><strong>{visitorCount}</strong><span>Players online</span></div>
+          <div className="activity-stat"><strong>{scrimSessions.length}</strong><span>Daily sessions</span></div>
+          <div className="activity-note"><ShieldCheck size={16} /> Room management via WhatsApp</div>
+        </div>
+      </section>
 
-        <section className="mt-20">
-          {sectionTitle('Tournament Roadmap', 'How Season 1 progresses')}
-          <div className="space-y-5 rounded-[40px] border border-white/10 bg-[#0d0d16] p-8 shadow-card">
-            {featuredTournament.stages.map((stage, idx) => (
-              <motion.div
-                key={stage.id}
-                initial={{ opacity: 0, x: -24 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: idx * 0.08, duration: 0.35 }}
-                className="relative rounded-3xl border border-white/10 bg-[#0f0f18] p-6"
-              >
-                <div className="absolute left-5 top-5 h-3 w-3 rounded-full bg-violet shadow-[0_0_18px_rgba(140,51,255,0.35)]" />
-                <p className="text-sm uppercase tracking-[0.35em] text-violet/70">{stage.title}</p>
-                <p className="mt-2 text-lg font-semibold text-white">{stage.description}</p>
-                <div className="mt-3 text-xs uppercase tracking-[0.35em] text-silver/70">{stage.status}</div>
-              </motion.div>
-            ))}
-          </div>
-        </section>
-
-        <section className="mt-20">
-          {sectionTitle('Leaderboard Preview', 'Top teams in competition')}
-          <div className="grid gap-5 lg:grid-cols-3">
-            {leaderboardTeams.slice(0, 3).map((team) => (
-              <motion.div
-                key={team.id}
-                initial={{ opacity: 0, y: 22 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.35 }}
-                className="rounded-[36px] border border-white/10 bg-[#0f0f18] p-6 shadow-card"
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <div className="rounded-3xl bg-white/5 px-4 py-2 text-sm font-semibold text-violet">#{team.rank}</div>
-                  <div className="rounded-3xl bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.35em] text-silver/80">Top {team.rank}</div>
+      <section id="daily-scrims" className="section-band mx-auto max-w-7xl px-4 pb-20 pt-24 sm:px-6 lg:px-8">
+        <div className="section-heading"><div><p className="eyebrow">The main event</p><h2>DAILY SCRIMS</h2><p>Choose your slot. Build your squad. Enter the lobby.</p></div><Link to="/scrims" className="text-link">View all details <ArrowRight size={16} /></Link></div>
+        <div className="mt-10 grid gap-4 lg:grid-cols-2">
+          {scrimSessions.map((session, index) => (
+            <Reveal key={session.id} delay={index * 0.05}>
+              <article className="scrim-card">
+                <div className="flex items-start justify-between gap-4"><div><p className="eyebrow">Zeptor daily scrim</p><h3 className="mt-3">{session.time}</h3></div><Clock3 className="text-violet" size={22} /></div>
+                <div className="mt-7 grid gap-2 sm:grid-cols-3">
+                  {session.entryOptions.map((option, optionIndex) => <div key={option.entryFee} className={`entry-tile ${entryColors[optionIndex]}`}><p className="entry-fee">₹{option.entryFee}</p><p className="entry-copy">₹{option.prizePool} prize pool</p><Link to={`/scrims/${session.id}`} className="entry-link">Book slot <ArrowRight size={13} /></Link></div>)}
                 </div>
-                <h3 className="mt-5 text-xl font-semibold text-white">{team.name}</h3>
-                <div className="mt-4 space-y-2 text-sm text-silver/80">
-                  <p>Matches: {team.matches}</p>
-                  <p>WWCD: {team.wwcd}</p>
-                  <p>Total points: {team.totalPoints}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </section>
+                <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-4 text-xs uppercase tracking-[0.18em] text-muted"><span>{session.teams} lobby</span><span>{session.maps.join(' / ')}</span></div>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+      </section>
 
-        <section className="mt-20">
-          {sectionTitle('Latest Results', 'Recent BGMI outcomes')}
-          <div className="grid gap-5 lg:grid-cols-2">
-            {results.map((item) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 22 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.35 }}
-                className="rounded-[36px] border border-white/10 bg-[#0f0f18] p-6 shadow-card"
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <span className="text-xs uppercase tracking-[0.35em] text-violet/70">{item.category}</span>
-                  <span className="text-xs text-silver/70">{item.date}</span>
-                </div>
-                <h3 className="mt-4 text-2xl font-semibold text-white">{item.event}</h3>
-                <p className="mt-4 text-sm leading-6 text-silver/80">Winner: {item.winner}</p>
-                <p className="mt-2 text-sm leading-6 text-silver/80">Runner-up: {item.runnerUp}</p>
-                <p className="mt-2 text-sm leading-6 text-silver/80">Prize Pool: {item.prizePool}</p>
-              </motion.div>
-            ))}
-          </div>
-        </section>
+      <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
+        <div className="section-heading"><div><p className="eyebrow">Today at Zeptor</p><h2>SCRIM SCHEDULE</h2></div></div>
+        <div className="schedule-list mt-8">{scrimSessions.map((session, index) => <div className="schedule-row" key={session.id}><span className="schedule-index">0{index + 1}</span><strong>{session.time}</strong><span>₹25 / ₹35 / ₹60</span><span>₹500 / ₹700 / ₹1000</span><Link to={`/scrims/${session.id}`} aria-label={`Book ${session.time}`}><ArrowRight size={18} /></Link></div>)}</div>
+      </section>
 
-        <section className="mt-20">
-          {sectionTitle('Competitive Teams', 'Built for emerging squads')}
-          <div className="grid gap-5 lg:grid-cols-3">
-            {news.slice(0, 3).map((item) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 22 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.35 }}
-                className="overflow-hidden rounded-[36px] border border-white/10 bg-[#0f0f18] shadow-card"
-              >
-                <div className="h-48 bg-slate-800" />
-                <div className="p-6">
-                  <p className="text-xs uppercase tracking-[0.35em] text-violet/70">{item.category}</p>
-                  <h3 className="mt-4 text-xl font-semibold text-white">{item.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-silver/80">{item.description}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </section>
+      <section className="section-band mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
+        <div className="section-heading"><div><p className="eyebrow">Built for the grind</p><h2>WHY ZEPTOR</h2></div></div>
+        <div className="feature-grid mt-10">{[[Trophy, 'Competitive scrims', 'Structured matches that sharpen your team.'], [Clock3, 'On-time rooms', 'Clear sessions and dependable room drops.'], [Users, 'Fixed team lobbies', 'A focused field for serious squads.'], [CheckCircle2, 'Transparent results', 'Match outcomes that stay easy to follow.'], [ShieldCheck, 'Affordable entry', 'Three clear tiers for every team.'], [MessageCircle, 'Active community', 'Updates, support and match-day help.']].map(([Icon, title, description], index) => { const FeatureIcon = Icon as typeof Trophy; return <Reveal key={title as string} delay={index * 0.04}><div className="feature-item"><FeatureIcon size={22} /><div><h3>{title as string}</h3><p>{description as string}</p></div></div></Reveal>; })}</div>
+      </section>
 
-        <section className="mt-20 rounded-[40px] border border-white/10 bg-[#0d0d16] p-10 shadow-card">
-          <div className="grid gap-8 lg:grid-cols-[1.5fr_1fr] lg:items-center">
-            <div>
-              <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Community</p>
-              <h2 className="mt-3 text-4xl font-semibold text-white">Join the Zeptor Esports Community</h2>
-              <p className="mt-5 max-w-xl text-base leading-8 text-silver/80">
-                Stay updated with daily scrims, tournaments, player opportunities, recruitment, live streams and competitive BGMI events.
-              </p>
-            </div>
-            <div className="space-y-4 rounded-[32px] border border-white/10 bg-[#0f0f18] p-6">
-              <div className="rounded-3xl bg-white/5 p-6">
-                <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Community CTA</p>
-                <p className="mt-3 text-xl font-semibold text-white">JOIN • COMPETE • GROW</p>
-              </div>
-              <a href={siteConfig.whatsappCommunity} target="_blank" rel="noreferrer" className="inline-flex w-full items-center justify-center rounded-3xl bg-violet px-6 py-4 text-sm font-semibold text-white transition hover:-translate-y-0.5">
-                JOIN WHATSAPP COMMUNITY
-              </a>
-            </div>
-          </div>
-        </section>
-      </div>
+      <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8"><div className="section-heading"><div><p className="eyebrow">Four moves to match day</p><h2>HOW IT WORKS</h2></div></div><div className="steps-grid mt-10">{[['01', 'Choose your slot'], ['02', 'Select entry'], ['03', 'Register your team'], ['04', 'Join the room & compete']].map(([number, title]) => <div className="step-item" key={number}><span>{number}</span><h3>{title}</h3></div>)}</div></section>
+      
+      <section className="mx-auto grid max-w-7xl gap-5 px-4 pb-20 sm:px-6 lg:grid-cols-[1.15fr_0.85fr] lg:px-8">
+        <div className="results-panel"><div className="section-heading"><div><p className="eyebrow">Match-day archive</p><h2>RECENT RESULTS</h2></div><Link to="/results" className="text-link">All results <ArrowRight size={16} /></Link></div>{dailyResults.length ? dailyResults.map((result) => <div className="result-row" key={result.id}><div><p className="text-xs uppercase tracking-[0.2em] text-violet">{result.event}</p><p className="mt-2 font-semibold text-white">{result.winner} <span className="font-normal text-muted">over {result.runnerUp}</span></p></div><div className="text-right"><p className="font-display text-xl text-white">{result.prizePool}</p><p className="text-xs text-muted">{result.date}</p></div></div>) : <p className="mt-8 text-sm text-muted">No scrim results published yet.</p>}</div>
+        <div className="leader-panel"><div className="section-heading"><div><p className="eyebrow">Performance table</p><h2>TOP TEAMS</h2></div><Link to="/leaderboard" className="text-link"><ArrowRight size={16} /></Link></div>{leaderboardTeams.slice(0, 3).map((team) => <div className="leader-row" key={team.id}><span className="leader-rank">0{team.rank}</span><strong>{team.name}</strong><span>{team.totalPoints} pts</span></div>)}</div>
+      </section>
+      
+  <section className="community-cta mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8"><div><p className="eyebrow">Stay match ready</p><h2>JOIN THE ZEPTOR COMMUNITY</h2><p className="mt-4 max-w-2xl text-sm leading-7 text-silver">Get daily scrim updates, slot announcements, room details and important Zeptor Esports updates directly on WhatsApp.</p></div><a href={siteConfig.whatsappCommunity} target="_blank" rel="noreferrer" className="btn-primary whitespace-nowrap px-6 py-4 text-sm"><MessageCircle size={17} /> Join WhatsApp community</a></section>
+      
+  <footer className="home-social mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8"><p className="eyebrow">Follow the action</p><div className="mt-4 flex flex-wrap gap-5 text-sm text-silver"><a href={siteConfig.instagram} target="_blank" rel="noreferrer"><Instagram size={16} /> Instagram</a><a href={siteConfig.youtube} target="_blank" rel="noreferrer"><Youtube size={16} /> YouTube</a><a href={siteConfig.whatsappCommunity} target="_blank" rel="noreferrer"><MessageCircle size={16} /> WhatsApp</a></div></footer>
     </div>
   );
 };

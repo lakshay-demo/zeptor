@@ -8,7 +8,7 @@ const AboutPage = () => (
       <p className="text-sm uppercase tracking-[0.35em] text-violet/80 font-semibold">Built for competition</p>
       <h1 className="mt-4 text-4xl font-semibold text-white sm:text-5xl">An emerging BGMI ecosystem crafted for serious teams</h1>
       <p className="mt-4 max-w-2xl text-sm leading-7 text-silver-muted sm:text-base">
-        {siteConfig.organizationName} is an upcoming competitive BGMI esports organization focused on creating structured tournaments, daily scrims and player opportunities.
+        {siteConfig.organizationName} is a professional BGMI esports platform focused on reliable daily scrims and player opportunities.
       </p>
     </section>
 

@@ -43,6 +43,14 @@ const recentActivity = [
 const AdminPage = () => {
   const [banners, setBanners] = useState<BannerConfig[]>(defaultBannerConfigs);
   const [saveMessage, setSaveMessage] = useState('');
+  const [rewardStats, setRewardStats] = useState({
+    eligibleTeams: 6,
+    totalEntries: 84,
+    topParticipatingTeam: 'TEAM X',
+    topPerformingTeam: 'TEAM X',
+    avgTeamScore: 42,
+    totalRewardsDistributed: 3,
+  });
 
   useEffect(() => {
     const saved = localStorage.getItem('zeptorHeroBanners');
@@ -271,6 +279,41 @@ const AdminPage = () => {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+
+        <div className="rounded-[36px] border border-white/10 bg-[#0f0f18] p-6 shadow-card">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <p className="text-sm uppercase tracking-[0.35em] text-violet/70">Monthly rewards</p>
+              <h2 className="mt-3 text-2xl font-semibold text-white">Reward cycle control</h2>
+            </div>
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/5 px-4 py-2 text-sm text-silver/80">
+              <MessageSquare size={18} /> Admin
+            </div>
+          </div>
+          <div className="mt-6 grid gap-3 sm:grid-cols-2">
+            <div className="rounded-2xl border border-violet/15 bg-violet/5 p-4">
+              <p className="text-xs uppercase tracking-[0.35em] text-violet/80">Eligible teams</p>
+              <p className="mt-2 text-2xl font-semibold text-white">{rewardStats.eligibleTeams}</p>
+            </div>
+            <div className="rounded-2xl border border-violet/15 bg-violet/5 p-4">
+              <p className="text-xs uppercase tracking-[0.35em] text-violet/80">Draw entries</p>
+              <p className="mt-2 text-2xl font-semibold text-white">{rewardStats.totalEntries}</p>
+            </div>
+            <div className="rounded-2xl border border-violet/15 bg-violet/5 p-4">
+              <p className="text-xs uppercase tracking-[0.35em] text-violet/80">Top participant</p>
+              <p className="mt-2 text-lg font-semibold text-white">{rewardStats.topParticipatingTeam}</p>
+            </div>
+            <div className="rounded-2xl border border-violet/15 bg-violet/5 p-4">
+              <p className="text-xs uppercase tracking-[0.35em] text-violet/80">Top performer</p>
+              <p className="mt-2 text-lg font-semibold text-white">{rewardStats.topPerformingTeam}</p>
+            </div>
+          </div>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <button type="button" className="btn-primary px-5 py-3 text-sm">Create reward cycle</button>
+            <button type="button" className="btn-secondary px-5 py-3 text-sm">Run draw</button>
+            <button type="button" className="btn-secondary px-5 py-3 text-sm">Publish winner</button>
           </div>
         </div>
 

@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { Menu, Instagram, Youtube, Users } from 'lucide-react';
+import { Menu, Instagram, Youtube, X } from 'lucide-react';
 import { Link, NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import logoPoster from '../assets/posters/WhatsApp Image 2026-08-11 at 11.34.55 PM.jpeg';
@@ -7,12 +7,10 @@ import { siteConfig } from '../data/siteConfig';
 
 const navItems = [
   { path: '/', label: 'Home' },
-  { path: '/scrims', label: 'Scrims' },
-  { path: '/tournaments', label: 'Tournaments' },
-  { path: '/leaderboard', label: 'Leaderboards' },
-  { path: '/teams', label: 'Teams' },
+  { path: '/scrims', label: 'Daily Scrims' },
   { path: '/results', label: 'Results' },
-  { path: '/live', label: 'Live' },
+  { path: '/leaderboard', label: 'Leaderboard' },
+  { path: '/community', label: 'Community' },
 ];
 
 const Navbar = () => {
@@ -45,11 +43,21 @@ const Navbar = () => {
             <NavLink
               key={item.path}
               to={item.path}
-              className={({ isActive }) =>
-                `text-sm transition ${isActive ? 'text-white font-semibold' : 'text-silver/80 hover:text-white'}`
-              }
+              className={({ isActive }) => {
+                const activeState = isActive ? 'text-white font-semibold' : 'text-silver/80 hover:text-white';
+                return `group relative text-sm transition-all duration-200 ${activeState}`;
+              }}
             >
-              {item.label}
+              {({ isActive }) => (
+                <span className="relative inline-flex items-center">
+                  {item.label}
+                  <span
+                    className={`absolute -bottom-1 left-0 h-0.5 rounded-full bg-gradient-to-r from-violet to-purple transition-all duration-200 ${
+                      isActive ? 'w-full opacity-100' : 'w-0 opacity-0 group-hover:w-full group-hover:opacity-100'
+                    }`}
+                  />
+                </span>
+              )}
             </NavLink>
           ))}
         </nav>
@@ -65,7 +73,7 @@ const Navbar = () => {
             href={siteConfig.whatsappCommunity}
             target="_blank"
             rel="noreferrer"
-            className="rounded-full bg-violet px-5 py-2 text-sm font-semibold text-white shadow-[0_20px_60px_rgba(140,51,255,0.18)] transition hover:-translate-y-0.5"
+            className="rounded-full bg-violet px-5 py-2 text-sm font-semibold text-white shadow-[0_20px_60px_rgba(140,51,255,0.18)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_0_24px_rgba(168,85,247,0.45)]"
           >
             JOIN COMMUNITY
           </a>
@@ -96,8 +104,8 @@ const Navbar = () => {
                   <p className="text-xs uppercase tracking-[0.35em] text-violet/70">Menu</p>
                   <p className="text-lg font-semibold text-white">Zeptor Navigation</p>
                 </div>
-                <button onClick={() => setIsOpen(false)} className="text-silver/80 hover:text-white">
-                  Close
+                <button aria-label="Close navigation menu" onClick={() => setIsOpen(false)} className="text-silver/80 hover:text-white">
+                  <X size={20} />
                 </button>
               </div>
               <div className="space-y-4">

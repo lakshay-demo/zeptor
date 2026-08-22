@@ -4,12 +4,9 @@ import { siteConfig } from '../data/siteConfig';
 
 const footerLinks = [
   { label: 'Home', path: '/' },
-  { label: 'Scrims', path: '/scrims' },
-  { label: 'Tournaments', path: '/tournaments' },
+  { label: 'Daily Scrims', path: '/scrims' },
   { label: 'Leaderboard', path: '/leaderboard' },
-  { label: 'Teams', path: '/teams' },
   { label: 'Results', path: '/results' },
-  { label: 'Live', path: '/live' },
   { label: 'Community', path: '/community' },
   { label: 'About', path: '/about' },
   { label: 'Contact', path: '/contact' },

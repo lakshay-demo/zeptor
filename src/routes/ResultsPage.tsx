@@ -3,19 +3,20 @@ import { Filter, Trophy } from 'lucide-react';
 import { useState } from 'react';
 import { results } from '../data/results';
 
-const filters = ['All', 'Daily Scrims', 'Tournaments', 'Recent'];
+const filters = ['All', 'Daily Scrims', 'Recent'];
 
 const ResultsPage = () => {
   const [activeFilter, setActiveFilter] = useState('All');
-  const filtered = results.filter((item) => activeFilter === 'All' || item.category === activeFilter);
+  const scrimResults = results.filter((item) => item.category === 'Daily Scrim');
+  const filtered = scrimResults.filter((item) => activeFilter === 'All' || activeFilter === 'Recent' || activeFilter === 'Daily Scrims');
 
   return (
     <div className="mx-auto max-w-7xl px-4 pb-16 pt-10 sm:px-6 lg:px-8">
       <section className="rounded-[40px] border border-violet/25 bg-gradient-to-br from-violet/5 to-purple/5 backdrop-blur p-8 shadow-[0_0_40px_rgba(168,85,247,0.15)]">
         <p className="text-sm uppercase tracking-[0.35em] text-violet/80 font-semibold">Latest Results</p>
-        <h1 className="mt-4 text-4xl font-semibold text-white sm:text-5xl">Recent winners and tournament outcomes</h1>
+        <h1 className="mt-4 text-4xl font-semibold text-white sm:text-5xl">Daily scrim results</h1>
         <p className="mt-4 max-w-2xl text-sm leading-7 text-silver-muted sm:text-base">
-          Track results from daily scrims and tournaments, with a clean esports scoreboard for teams and champions.
+          Track published Zeptor scrim outcomes with a clean scoreboard for teams and match-day performance.
         </p>
       </section>
 
