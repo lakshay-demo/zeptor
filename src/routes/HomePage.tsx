@@ -3,7 +3,7 @@ import { ArrowRight, CheckCircle2, Clock3, Crosshair, Instagram, MessageCircle, 
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import heroRecruitmentPoster from '../assets/posters/WhatsApp Image 2026-08-11 at 11.34.56 PM (2).jpeg';
-import heroScrimsPoster from '../assets/posters/WhatsApp Image 2026-08-11 at 11.34.56 PM (1).jpeg';
+import dailyScrimsPoster from '../assets/posters/ChatGPT Image Aug 22, 2026, 03_51_16 PM.png';
 import { leaderboardTeams } from '../data/leaderboard';
 import { results } from '../data/results';
 import { scrimSessions } from '../data/scrims';
@@ -13,7 +13,7 @@ import { getVisitorSummary } from '../lib/visitorTracker';
 type HeroBanner = { image: string; title: string };
 
 const defaultBanners: HeroBanner[] = [
-  { image: heroScrimsPoster, title: 'Zeptor daily scrims' },
+  { image: dailyScrimsPoster, title: 'Zeptor daily BGMI scrims' },
   { image: heroRecruitmentPoster, title: 'Zeptor team recruitment' },
 ];
 
@@ -35,7 +35,9 @@ const HomePage = () => {
     if (!stored) return;
     try {
       const parsed = JSON.parse(stored) as HeroBanner[];
-      if (Array.isArray(parsed) && parsed.length > 0 && parsed.every((banner) => banner.image)) setBanners(parsed);
+      if (Array.isArray(parsed) && parsed.length > 0 && parsed.every((banner) => banner.image)) {
+        setBanners([{ image: dailyScrimsPoster, title: 'Zeptor daily BGMI scrims' }, ...parsed.filter((banner) => banner.image !== dailyScrimsPoster)]);
+      }
     } catch {
       setBanners(defaultBanners);
     }

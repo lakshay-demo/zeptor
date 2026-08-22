@@ -40,7 +40,7 @@ const Layout = () => {
       <AnimatePresence mode="wait">
         <motion.main
           key={location.pathname}
-          initial="initial"
+          initial={false}
           animate="animate"
           exit="exit"
           variants={pageVariants}
