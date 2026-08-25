@@ -2,8 +2,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, CheckCircle2, Clock3, Crosshair, Instagram, MessageCircle, Radio, ShieldCheck, Trophy, Users, Youtube } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import heroRecruitmentPoster from '../assets/posters/WhatsApp Image 2026-08-11 at 11.34.56 PM (2).jpeg';
-import dailyScrimsPoster from '../assets/posters/ChatGPT Image Aug 22, 2026, 03_51_16 PM.png';
+import firstHeroPoster from '../assets/posters/ChatGPT Image Aug 25, 2026, 08_53_19 PM.png';
+import secondHeroPoster from '../assets/posters/ChatGPT Image Aug 25, 2026, 08_49_13 PM.png';
 import { leaderboardTeams } from '../data/leaderboard';
 import { results } from '../data/results';
 import { scrimSessions } from '../data/scrims';
@@ -14,8 +14,8 @@ import YouTubeHub from '../components/YouTubeHub';
 type HeroBanner = { image: string; title: string };
 
 const defaultBanners: HeroBanner[] = [
-  { image: dailyScrimsPoster, title: 'Zeptor daily BGMI scrims' },
-  { image: heroRecruitmentPoster, title: 'Zeptor team recruitment' },
+  { image: firstHeroPoster, title: 'Zeptor Esports daily competition' },
+  { image: secondHeroPoster, title: 'Zeptor Esports competitive action' },
 ];
 
 const entryColors = ['border-white/10', 'border-violet/40', 'border-bright/50'];
@@ -27,27 +27,14 @@ const Reveal = ({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 );
 
 const HomePage = () => {
-  const [banners, setBanners] = useState<HeroBanner[]>(defaultBanners);
+  const banners = defaultBanners;
   const [activeBanner, setActiveBanner] = useState(0);
   const [visitorCount, setVisitorCount] = useState(0);
 
   useEffect(() => {
-    const stored = localStorage.getItem('zeptorHeroBanners');
-    if (!stored) return;
-    try {
-      const parsed = JSON.parse(stored) as HeroBanner[];
-      if (Array.isArray(parsed) && parsed.length > 0 && parsed.every((banner) => banner.image)) {
-        setBanners([{ image: dailyScrimsPoster, title: 'Zeptor daily BGMI scrims' }, ...parsed.filter((banner) => banner.image !== dailyScrimsPoster)]);
-      }
-    } catch {
-      setBanners(defaultBanners);
-    }
-  }, []);
-
-  useEffect(() => {
     const timer = window.setInterval(() => setActiveBanner((current) => (current + 1) % banners.length), 5000);
     return () => window.clearInterval(timer);
-  }, [banners.length]);
+  }, []);
 
   useEffect(() => {
     const refresh = () => setVisitorCount(getVisitorSummary().activeVisitors);

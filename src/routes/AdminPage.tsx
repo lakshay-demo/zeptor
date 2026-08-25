@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, BarChart3, CalendarDays, MessageSquare, PlusCircle, ShieldCheck, Trash2, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import heroRecruitmentPoster from '../assets/posters/WhatsApp Image 2026-08-11 at 11.34.56 PM (2).jpeg';
-import dailyScrimsPoster from '../assets/posters/ChatGPT Image Aug 22, 2026, 03_51_16 PM.png';
+import firstHeroPoster from '../assets/posters/ChatGPT Image Aug 25, 2026, 08_53_19 PM.png';
+import secondHeroPoster from '../assets/posters/ChatGPT Image Aug 25, 2026, 08_49_13 PM.png';
 import { featuredTournament } from '../data/tournaments';
 import { leaderboardTeams } from '../data/leaderboard';
 import { scrimSessions } from '../data/scrims';
@@ -14,9 +14,8 @@ type BannerConfig = {
 };
 
 const defaultBannerConfigs: BannerConfig[] = [
-  { image: dailyScrimsPoster, title: 'Zeptor Daily Scrims', subtitle: 'Daily custom rooms for serious BGMI teams.' },
-  { image: heroRecruitmentPoster, title: 'Zeptor Recruitment', subtitle: 'Talent scouting, team building, and roster growth.' },
-  { image: dailyScrimsPoster, title: 'Zeptor Daily Scrims', subtitle: 'Daily custom rooms for serious BGMI teams.' },
+  { image: firstHeroPoster, title: 'Zeptor Daily Scrims', subtitle: 'Daily custom rooms for serious BGMI teams.' },
+  { image: secondHeroPoster, title: 'Zeptor Esports', subtitle: 'Competitive action, content and community.' },
 ];
 
 const quickActions = [
