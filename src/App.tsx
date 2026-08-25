@@ -12,6 +12,7 @@ import ContactPage from './routes/ContactPage';
 import CommunityPage from './routes/CommunityPage';
 import ScrimDetailsPage from './routes/ScrimDetailsPage';
 import AdminPage from './routes/AdminPage';
+import MediaPage from './routes/MediaPage';
 
 const App = () => (
   <Routes>
@@ -27,6 +28,7 @@ const App = () => (
       <Route path="about" element={<AboutPage />} />
       <Route path="contact" element={<ContactPage />} />
       <Route path="community" element={<CommunityPage />} />
+      <Route path="media" element={<MediaPage />} />
       <Route path="admin" element={<AdminPage />} />
     </Route>
   </Routes>

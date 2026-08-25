@@ -9,6 +9,7 @@ import { results } from '../data/results';
 import { scrimSessions } from '../data/scrims';
 import { siteConfig } from '../data/siteConfig';
 import { getVisitorSummary } from '../lib/visitorTracker';
+import YouTubeHub from '../components/YouTubeHub';
 
 type HeroBanner = { image: string; title: string };
 
@@ -99,15 +100,14 @@ const HomePage = () => {
 
       <section id="daily-scrims" className="section-band mx-auto max-w-7xl px-4 pb-20 pt-24 sm:px-6 lg:px-8">
         <div className="section-heading"><div><p className="eyebrow">The main event</p><h2>DAILY SCRIMS</h2><p>Choose your slot. Build your squad. Enter the lobby.</p></div><Link to="/scrims" className="text-link">View all details <ArrowRight size={16} /></Link></div>
-        <div className="mt-10 grid gap-4 lg:grid-cols-2">
+        <div className="home-scrim-grid mt-10 grid gap-4 lg:grid-cols-2">
           {scrimSessions.map((session, index) => (
             <Reveal key={session.id} delay={index * 0.05}>
               <article className="scrim-card">
                 <div className="flex items-start justify-between gap-4"><div><p className="eyebrow">Zeptor daily scrim</p><h3 className="mt-3">{session.time}</h3></div><Clock3 className="text-violet" size={22} /></div>
                 <div className="mt-7 grid gap-2 sm:grid-cols-3">
-                  {session.entryOptions.map((option, optionIndex) => <div key={option.entryFee} className={`entry-tile ${entryColors[optionIndex]}`}><p className="entry-fee">₹{option.entryFee}</p><p className="entry-copy">₹{option.prizePool} prize pool</p><Link to={`/scrims/${session.id}`} className="entry-link">Book slot <ArrowRight size={13} /></Link></div>)}
+                  {session.entryOptions.map((option, optionIndex) => <div key={option.entryFee} className={`entry-tile ${entryColors[optionIndex]}`}><p className="entry-fee">₹{option.entryFee}</p><p className="entry-copy">₹{option.prizePool} prize pool</p><Link to={`/scrims/${session.id}`} className="entry-link"><span className="entry-link-label">Book slot</span><ArrowRight size={13} /></Link></div>)}
                 </div>
-                <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-4 text-xs uppercase tracking-[0.18em] text-muted"><span>{session.teams} lobby</span><span>{session.maps.join(' / ')}</span></div>
               </article>
             </Reveal>
           ))}
@@ -117,6 +117,10 @@ const HomePage = () => {
       <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
         <div className="section-heading"><div><p className="eyebrow">Today at Zeptor</p><h2>SCRIM SCHEDULE</h2></div></div>
         <div className="schedule-list mt-8">{scrimSessions.map((session, index) => <div className="schedule-row" key={session.id}><span className="schedule-index">0{index + 1}</span><strong>{session.time}</strong><span>₹25 / ₹35 / ₹60</span><span>₹500 / ₹700 / ₹1000</span><Link to={`/scrims/${session.id}`} aria-label={`Book ${session.time}`}><ArrowRight size={18} /></Link></div>)}</div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
+        <YouTubeHub compact />
       </section>
 
       <section className="section-band mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">

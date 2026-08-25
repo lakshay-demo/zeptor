@@ -41,7 +41,8 @@ npm run build
 This project can be deployed on Vercel, Netlify, or any static host that supports Vite.
 
 - Build output is generated into `dist/`.
-- There are no required environment variables for this static site.
+- The site works without environment variables and shows a YouTube channel fallback.
+- To load live status and latest videos, set `VITE_YOUTUBE_API_URL` to a server-side proxy endpoint. That endpoint should return `{ "videos": [...], "live": null | {...} }` using a private `YOUTUBE_API_KEY`; never put the API key in Vite client variables.
 
 ## Notes
 

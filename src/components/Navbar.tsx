@@ -10,6 +10,7 @@ const navItems = [
   { path: '/scrims', label: 'Daily Scrims' },
   { path: '/results', label: 'Results' },
   { path: '/leaderboard', label: 'Leaderboard' },
+  { path: '/media', label: 'Media' },
   { path: '/community', label: 'Community' },
 ];
 
@@ -69,14 +70,7 @@ const Navbar = () => {
           <a href={siteConfig.youtube} target="_blank" rel="noreferrer" className="text-silver/80 transition hover:text-white">
             <Youtube size={18} />
           </a>
-          <a
-            href={siteConfig.whatsappCommunity}
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-full bg-violet px-5 py-2 text-sm font-semibold text-white shadow-[0_20px_60px_rgba(140,51,255,0.18)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_0_24px_rgba(168,85,247,0.45)]"
-          >
-            JOIN COMMUNITY
-          </a>
+          <Link to="/scrims" className="btn-primary px-5 py-2 text-xs">BOOK A SCRIM</Link>
         </div>
 
         <button
@@ -95,10 +89,10 @@ const Navbar = () => {
             initial={{ opacity: 0, y: -16 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
-            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-50 bg-[#050507] lg:hidden"
             onClick={() => setIsOpen(false)}
           >
-            <div className="absolute right-4 top-4 w-[calc(100%-2rem)] max-w-sm rounded-3xl border border-violet/20 bg-gradient-to-br from-violet/5 to-purple/5 backdrop-blur-xl p-6 shadow-[0_20px_60px_rgba(168,85,247,0.15)]" onClick={(event) => event.stopPropagation()}>
+            <div className="absolute right-4 top-4 w-[calc(100%-2rem)] max-w-sm rounded-3xl border border-violet/20 bg-[#101017] p-6 shadow-[0_20px_60px_rgba(168,85,247,0.15)]" onClick={(event) => event.stopPropagation()}>
               <div className="mb-5 flex items-center justify-between">
                 <div>
                   <p className="text-xs uppercase tracking-[0.35em] text-violet/70">Menu</p>
@@ -120,6 +114,7 @@ const Navbar = () => {
                   </Link>
                 ))}
               </div>
+              <Link to="/scrims" onClick={() => setIsOpen(false)} className="btn-primary mt-6 w-full px-5 py-3 text-sm">BOOK A SCRIM</Link>
               <div className="mt-6 flex items-center justify-between gap-3 border-t border-white/10 pt-6 text-silver/80">
                 <a href={siteConfig.instagram} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-white hover:text-violet">
                   <Instagram size={18} /> Instagram
