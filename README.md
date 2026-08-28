@@ -49,3 +49,14 @@ This project can be deployed on Vercel, Netlify, or any static host that support
 - `src/routes/` contains the main page views.
 - `src/components/` contains layout and reusable UI components.
 - `src/data/` stores mock content for scrims, tournaments, news, and leaderboard.
+
+## Supabase setup
+
+The Season 2 registration feature uses Supabase when these Vite variables are configured in `.env.local` and in Vercel Project Settings:
+
+```bash
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
+```
+
+Run `supabase/schema.sql` in the Supabase SQL Editor. It creates the registration table, database-enforced 48-team limit, RLS policies, and realtime publication. Add the `admin` role to an authenticated user's `app_metadata` to allow registration reads and status updates. The browser fallback remains available for local development if Supabase is unavailable.

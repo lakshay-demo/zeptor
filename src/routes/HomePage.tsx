@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowRight, CheckCircle2, Clock3, Crosshair, Instagram, MessageCircle, Radio, ShieldCheck, Trophy, Users, Youtube } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Clock3, Crosshair, Instagram, MessageCircle, Radio, ShieldCheck, Trophy, Users, X, Youtube } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import firstHeroPoster from '../assets/posters/ChatGPT Image Aug 25, 2026, 08_53_19 PM.png';
@@ -10,6 +10,7 @@ import { scrimSessions } from '../data/scrims';
 import { siteConfig } from '../data/siteConfig';
 import { getVisitorSummary } from '../lib/visitorTracker';
 import YouTubeHub from '../components/YouTubeHub';
+import { addSeason2Registration, getSeason2Registrations, isValidIndianMobile, season2Config, season2RegistrationEvent, subscribeToSeason2Registrations } from '../lib/season2Registration';
 
 type HeroBanner = { image: string; title: string };
 
@@ -30,10 +31,23 @@ const HomePage = () => {
   const banners = defaultBanners;
   const [activeBanner, setActiveBanner] = useState(0);
   const [visitorCount, setVisitorCount] = useState(0);
+  const [season2Count, setSeason2Count] = useState(0);
+  const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
+  const [registrationMessage, setRegistrationMessage] = useState('');
+  const [registrationError, setRegistrationError] = useState('');
+  const [formValues, setFormValues] = useState({ teamName: '', teamLeaderName: '', mobileNumber: '' });
 
   useEffect(() => {
     const timer = window.setInterval(() => setActiveBanner((current) => (current + 1) % banners.length), 5000);
     return () => window.clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const refresh = async () => setSeason2Count((await getSeason2Registrations()).length);
+    void refresh();
+    window.addEventListener(season2RegistrationEvent, refresh);
+    const unsubscribe = subscribeToSeason2Registrations(() => void refresh());
+    return () => { window.removeEventListener(season2RegistrationEvent, refresh); unsubscribe(); };
   }, []);
 
   useEffect(() => {
@@ -44,6 +58,27 @@ const HomePage = () => {
   }, []);
 
   const dailyResults = results.filter((result) => result.category === 'Daily Scrim');
+  const registrationFull = season2Count >= season2Config.maxTeams;
+
+  const submitRegistration = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setRegistrationError('');
+    if (!formValues.teamName.trim() || !formValues.teamLeaderName.trim()) {
+      setRegistrationError('Team name and team leader name are required.');
+      return;
+    }
+    if (!isValidIndianMobile(formValues.mobileNumber)) {
+      setRegistrationError('Enter a valid 10-digit Indian mobile number.');
+      return;
+    }
+    const result = await addSeason2Registration(formValues);
+    if (!result.ok) {
+      setRegistrationError(result.error);
+      return;
+    }
+    setRegistrationMessage('Registration submitted successfully. Your team has been added to the Season 2 registration list.');
+    setFormValues({ teamName: '', teamLeaderName: '', mobileNumber: '' });
+  };
 
   return (
     <div className="home-shell">
@@ -56,6 +91,7 @@ const HomePage = () => {
             <p className="mt-5 max-w-xl text-base leading-8 text-silver sm:text-lg">Compete in reliable daily custom rooms with affordable entry fees, fixed lobbies and professional match management.</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link to="/scrims" className="btn-primary px-6 py-4 text-sm"><Crosshair size={17} /> Book a scrim slot <ArrowRight size={16} /></Link>
+              {!registrationFull && <button type="button" onClick={() => { setIsRegistrationOpen(true); setRegistrationMessage(''); setRegistrationError(''); }} className="btn-primary px-6 py-4 text-sm"><Trophy size={17} /> Register your team <ArrowRight size={16} /></button>}
               <a href={siteConfig.whatsappCommunity} target="_blank" rel="noreferrer" className="btn-secondary px-6 py-4 text-sm"><MessageCircle size={17} /> Join community</a>
             </div>
           </motion.div>
@@ -100,6 +136,33 @@ const HomePage = () => {
           ))}
         </div>
       </section>
+
+      <section className="season2-event mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
+        <div className="season2-event-copy">
+          <p className="eyebrow">Zeptor Esports x Insane Esports</p>
+          <h2>SEASON 2 <span>RISING TOGETHER</span></h2>
+          <p className="mt-4 max-w-xl text-base leading-8 text-silver">A new chapter for ambitious teams ready to make their mark.</p>
+          <div className="mt-8 flex flex-wrap gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-silver"><span>48 teams</span><span>Limited slots</span><span>Entry fee: ₹{season2Config.entryFee}</span><span>Prize pool: ₹{season2Config.prizePool}</span></div>
+        </div>
+        <div className="season2-event-action">
+          <div><p className="season2-count">{Math.min(season2Count, season2Config.maxTeams)} <span>/ {season2Config.maxTeams}</span></p><p className="text-xs uppercase tracking-[0.25em] text-silver/70">Teams registered</p></div>
+          {registrationFull ? <div className="mt-6"><p className="font-display text-xl text-white">REGISTRATION FULL</p><p className="mt-2 text-sm text-silver">All 48 team registrations have been received.</p></div> : <button type="button" onClick={() => { setIsRegistrationOpen(true); setRegistrationMessage(''); setRegistrationError(''); }} className="btn-primary mt-6 px-5 py-3 text-sm">Register your team <ArrowRight size={16} /></button>}
+        </div>
+      </section>
+
+      {isRegistrationOpen && <div className="registration-modal" role="dialog" aria-modal="true" aria-labelledby="registration-title">
+        <div className="registration-panel">
+          <button type="button" aria-label="Close registration form" onClick={() => setIsRegistrationOpen(false)} className="registration-close"><X size={20} /></button>
+          <p className="eyebrow">Season 2 interest list</p><h2 id="registration-title" className="mt-3">REGISTER YOUR TEAM</h2><p className="mt-3 text-sm leading-7 text-silver">Team Leaders — submit your team details to secure your interest for Season 2.</p>
+          {registrationMessage ? <div className="mt-7 rounded-2xl border border-emerald-400/30 bg-emerald-400/10 p-5 text-sm leading-7 text-emerald-100"><strong className="block text-base text-white">Registration submitted successfully.</strong>{registrationMessage.replace('Registration submitted successfully. ', '')}</div> : <form onSubmit={submitRegistration} className="mt-7 grid gap-4">
+            <label>Team name<input required value={formValues.teamName} onChange={(event) => setFormValues({ ...formValues, teamName: event.target.value })} placeholder="Enter your team name" /></label>
+            <label>Team leader name<input required value={formValues.teamLeaderName} onChange={(event) => setFormValues({ ...formValues, teamLeaderName: event.target.value })} placeholder="Enter the leader's name" /></label>
+            <label>Mobile number<input required inputMode="numeric" maxLength={10} value={formValues.mobileNumber} onChange={(event) => setFormValues({ ...formValues, mobileNumber: event.target.value.replace(/\D/g, '').slice(0, 10) })} placeholder="10-digit Indian mobile number" /></label>
+            {registrationError && <p className="text-sm text-red-300" role="alert">{registrationError}</p>}
+            <button type="submit" className="btn-primary mt-2 px-5 py-3 text-sm">Submit team <ArrowRight size={16} /></button>
+          </form>}
+        </div>
+      </div>}
 
       <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
         <div className="section-heading"><div><p className="eyebrow">Today at Zeptor</p><h2>SCRIM SCHEDULE</h2></div></div>

@@ -605,6 +605,14 @@ label {
 }
 
 @media (max-width: 640px) {
+  .home-shell > section {
+    width: calc(100% - 2rem);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   .media-feature { grid-template-columns: 1fr; }
   .media-feature-image { min-height: auto; aspect-ratio: 16 / 9; }
   .media-feature-copy { padding: 1.25rem; }
@@ -758,6 +766,39 @@ label {
 .feature-item h3, .step-item h3 { color: white; font-family: 'Rajdhani', sans-serif; font-size: 1.25rem; letter-spacing: 0; }
 .feature-item p { margin-top: 0.35rem; color: var(--text-muted); font-size: 0.82rem; line-height: 1.5; }
 .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+
+.season2-event { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(250px, 0.6fr); gap: 2rem; align-items: stretch; }
+.season2-event-copy, .season2-event-action, .season2-admin-panel { border: 1px solid rgba(192, 132, 252, 0.22); background: linear-gradient(135deg, rgba(25, 18, 38, 0.96), rgba(11, 11, 16, 0.96)); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); }
+.season2-event-copy { padding: 2.25rem; position: relative; overflow: hidden; }
+.season2-event-copy::after { content: 'S2'; position: absolute; right: 1rem; bottom: -1.6rem; color: rgba(192, 132, 252, 0.08); font-family: 'Orbitron', sans-serif; font-size: 9rem; font-weight: 900; pointer-events: none; }
+.season2-event-copy h2 { margin-top: 0.8rem; font-family: 'Orbitron', sans-serif; font-size: clamp(1.8rem, 4vw, 3.5rem); letter-spacing: 0; color: white; }
+.season2-event-copy h2 span { display: block; color: var(--primary-bright); }
+.season2-event-copy span { border-left: 2px solid var(--primary-bright); padding-left: 0.7rem; }
+.season2-event-action { display: flex; flex-direction: column; justify-content: center; padding: 2.25rem; }
+.season2-count { color: white; font-family: 'Orbitron', sans-serif; font-size: 2.7rem; font-weight: 800; }
+.season2-count span { color: var(--primary-bright); font-size: 1.5rem; }
+.registration-modal { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 1rem; background: rgba(3, 3, 6, 0.82); backdrop-filter: blur(10px); }
+.registration-panel { position: relative; width: min(100%, 30rem); max-width: 30rem; max-height: calc(100vh - 2rem); overflow-y: auto; padding: 2rem; border: 1px solid rgba(192, 132, 252, 0.4); background: linear-gradient(145deg, #191225, #0b0b10); box-shadow: 0 25px 90px rgba(0, 0, 0, 0.65), 0 0 50px rgba(124, 58, 237, 0.2); }
+.registration-close { position: absolute; top: 1rem; right: 1rem; display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border: 1px solid rgba(255,255,255,0.12); color: var(--text-soft); background: rgba(255,255,255,0.05); }
+.registration-panel label { display: grid; gap: 0.5rem; color: var(--silver); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; }
+.registration-panel input, .admin-search, .season2-admin-panel select, .registration-table select { min-height: 2.9rem; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.05); color: white; outline: none; padding: 0.75rem 0.85rem; }
+.registration-panel input:focus, .admin-search:focus-within { border-color: var(--primary-bright); box-shadow: 0 0 0 3px rgba(168,85,247,0.12); }
+.registration-panel input::placeholder { color: rgba(212,212,216,0.4); }
+.season2-admin-panel { margin-top: 1.5rem; padding: 1.5rem; }
+.admin-search { display: flex; align-items: center; gap: 0.55rem; }
+.admin-search input { min-width: 0; width: 100%; border: 0; padding: 0; background: transparent; color: white; outline: none; }
+.registration-table { width: 100%; min-width: 680px; border-collapse: collapse; text-align: left; font-size: 0.8rem; }
+.registration-table th { padding: 0 0.75rem 0.85rem; color: var(--text-muted); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.14em; }
+.registration-table td { padding: 0.9rem 0.75rem; border-top: 1px solid rgba(255,255,255,0.08); color: var(--silver); }
+.registration-table td:first-child { color: white; font-weight: 700; }
+.registration-table select { min-height: 2.2rem; padding: 0.35rem 0.5rem; font-size: 0.7rem; text-transform: uppercase; }
+.icon-button { display: grid; place-items: center; width: 2rem; height: 2rem; border: 1px solid rgba(192,132,252,0.25); color: var(--primary-bright); background: rgba(168,85,247,0.08); }
+
+@media (max-width: 700px) {
+  .season2-event { grid-template-columns: 1fr; }
+  .season2-event-copy, .season2-event-action { padding: 1.5rem; }
+  .season2-admin-panel { padding: 1.1rem; }
+}
 .step-item { position: relative; border-top: 1px solid var(--primary); padding-top: 1rem; }
 .step-item span { color: var(--primary-bright); font-family: 'Orbitron', sans-serif; font-size: 0.72rem; }
 .step-item h3 { margin-top: 0.8rem; max-width: 10rem; text-transform: uppercase; }

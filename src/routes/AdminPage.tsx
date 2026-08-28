@@ -1,11 +1,12 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, BarChart3, CalendarDays, MessageSquare, PlusCircle, ShieldCheck, Trash2, Users } from 'lucide-react';
+import { ArrowRight, BarChart3, CalendarDays, Eye, MessageSquare, PlusCircle, Search, ShieldCheck, Trash2, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import firstHeroPoster from '../assets/posters/ChatGPT Image Aug 25, 2026, 08_53_19 PM.png';
 import secondHeroPoster from '../assets/posters/ChatGPT Image Aug 25, 2026, 08_49_13 PM.png';
 import { featuredTournament } from '../data/tournaments';
 import { leaderboardTeams } from '../data/leaderboard';
 import { scrimSessions } from '../data/scrims';
+import { getSeason2Registrations, season2Config, season2RegistrationEvent, subscribeToSeason2Registrations, updateSeason2RegistrationStatus, type Season2InterestRegistration, type Season2RegistrationStatus } from '../lib/season2Registration';
 
 type BannerConfig = {
   image: string;
@@ -41,6 +42,11 @@ const recentActivity = [
 const AdminPage = () => {
   const [banners, setBanners] = useState<BannerConfig[]>(defaultBannerConfigs);
   const [saveMessage, setSaveMessage] = useState('');
+  const [registrations, setRegistrations] = useState<Season2InterestRegistration[]>([]);
+  const [registrationSearch, setRegistrationSearch] = useState('');
+  const [registrationStatus, setRegistrationStatus] = useState<'ALL' | Season2RegistrationStatus>('ALL');
+  const [registrationSort, setRegistrationSort] = useState<'newest' | 'oldest'>('newest');
+  const [selectedRegistration, setSelectedRegistration] = useState<Season2InterestRegistration | null>(null);
   const [rewardStats, setRewardStats] = useState({
     eligibleTeams: 6,
     totalEntries: 84,
@@ -64,6 +70,14 @@ const AdminPage = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const refresh = async () => setRegistrations(await getSeason2Registrations());
+    void refresh();
+    window.addEventListener(season2RegistrationEvent, refresh);
+    const unsubscribe = subscribeToSeason2Registrations(() => void refresh());
+    return () => { window.removeEventListener(season2RegistrationEvent, refresh); unsubscribe(); };
+  }, []);
+
   const updateBanner = (index: number, field: keyof BannerConfig, value: string) => {
     setBanners((current) => current.map((banner, currentIndex) => (currentIndex === index ? { ...banner, [field]: value } : banner)));
   };
@@ -79,6 +93,16 @@ const AdminPage = () => {
     localStorage.setItem('zeptorHeroBanners', JSON.stringify(defaultBannerConfigs));
     setSaveMessage('Banner settings reset to default.');
     window.dispatchEvent(new Event('storage'));
+  };
+
+  const visibleRegistrations = registrations
+    .filter((registration) => registrationStatus === 'ALL' || registration.status === registrationStatus)
+    .filter((registration) => `${registration.teamName} ${registration.teamLeaderName} ${registration.mobileNumber}`.toLowerCase().includes(registrationSearch.toLowerCase()))
+    .sort((first, second) => registrationSort === 'newest' ? second.createdAt.localeCompare(first.createdAt) : first.createdAt.localeCompare(second.createdAt));
+
+  const updateRegistrationStatus = async (id: string, status: Season2RegistrationStatus) => {
+    const updated = registrations.map((registration) => registration.id === id ? { ...registration, status } : registration);
+    if (await updateSeason2RegistrationStatus(id, status)) setSelectedRegistration(updated.find((registration) => registration.id === id) || null);
   };
 
   return (
@@ -127,6 +151,19 @@ const AdminPage = () => {
             </motion.div>
           ))}
         </div>
+
+        <section className="season2-admin-panel">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div><p className="text-sm uppercase tracking-[0.35em] text-violet/70">Season 2 registrations</p><h2 className="mt-3 text-2xl font-semibold text-white">Rising Together interest list</h2><p className="mt-2 text-sm text-silver/70">{registrations.length} / {season2Config.maxTeams} registrations received</p></div>
+            <div className="grid gap-3 sm:grid-cols-[minmax(220px,1fr)_150px_150px]">
+              <label className="admin-search"><Search size={16} /><input value={registrationSearch} onChange={(event) => setRegistrationSearch(event.target.value)} placeholder="Search registrations" /></label>
+              <select value={registrationStatus} onChange={(event) => setRegistrationStatus(event.target.value as typeof registrationStatus)} aria-label="Filter by status"><option value="ALL">All statuses</option><option value="PENDING">Pending</option><option value="CONTACTED">Contacted</option><option value="CONFIRMED">Confirmed</option><option value="REJECTED">Rejected</option></select>
+              <select value={registrationSort} onChange={(event) => setRegistrationSort(event.target.value as typeof registrationSort)} aria-label="Sort registrations"><option value="newest">Newest first</option><option value="oldest">Oldest first</option></select>
+            </div>
+          </div>
+          <div className="mt-6 overflow-x-auto"><table className="registration-table"><thead><tr><th>Team name</th><th>Team leader</th><th>Mobile</th><th>Date</th><th>Status</th><th aria-label="Actions" /></tr></thead><tbody>{visibleRegistrations.map((registration) => <tr key={registration.id}><td>{registration.teamName}</td><td>{registration.teamLeaderName}</td><td>{registration.mobileNumber}</td><td>{new Date(registration.createdAt).toLocaleDateString('en-IN')}</td><td><select value={registration.status} onChange={(event) => updateRegistrationStatus(registration.id, event.target.value as Season2RegistrationStatus)} aria-label={`Status for ${registration.teamName}`}><option value="PENDING">Pending</option><option value="CONTACTED">Contacted</option><option value="CONFIRMED">Confirmed</option><option value="REJECTED">Rejected</option></select></td><td><button type="button" className="icon-button" title="View registration" aria-label={`View ${registration.teamName}`} onClick={() => setSelectedRegistration(registration)}><Eye size={16} /></button></td></tr>)}</tbody></table>{!visibleRegistrations.length && <p className="py-8 text-center text-sm text-silver/60">No registrations match these filters.</p>}</div>
+          {selectedRegistration && <div className="mt-5 rounded-2xl border border-violet/20 bg-violet/5 p-5"><div className="flex items-start justify-between gap-4"><div><p className="text-xs uppercase tracking-[0.25em] text-violet/80">Registration detail</p><h3 className="mt-2 text-xl font-semibold text-white">{selectedRegistration.teamName}</h3></div><span className="text-xs uppercase tracking-[0.2em] text-silver/60">{selectedRegistration.status}</span></div><div className="mt-4 grid gap-3 text-sm text-silver sm:grid-cols-3"><p>Leader: <strong className="text-white">{selectedRegistration.teamLeaderName}</strong></p><p>Mobile: <strong className="text-white">{selectedRegistration.mobileNumber}</strong></p><p>Submitted: <strong className="text-white">{new Date(selectedRegistration.createdAt).toLocaleString('en-IN')}</strong></p></div></div>}
+        </section>
 
         <div className="rounded-[36px] border border-white/10 bg-[#0f0f18] p-6 shadow-card">
           <div className="flex items-center justify-between gap-4">
