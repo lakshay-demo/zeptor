@@ -9,12 +9,13 @@ export const scrimSessions: ScrimSession[] = [
     teams: '16–18 Teams',
     entryOptions: [
       {
-        entryFee: 30,
-        prizePool: 500,
+        entryFee: 35,
+        prizePool: 220,
         prizeDistribution: [
-          { rank: '🥇 1st', amount: '₹110' },
-          { rank: '🥈 2nd', amount: '₹50' },
-          { rank: '🥉 3rd', amount: '₹35' },
+          { rank: '🥇 1st', amount: '₹160' },
+          { rank: '🥈 2nd', amount: '₹70' },
+          { rank: '🥉 3rd', amount: '₹50' },
+          { rank: 'MVP', amount: '₹35' },
           { rank: '4th', amount: 'FREE SLOT' },
         ],
       },
@@ -28,12 +29,13 @@ export const scrimSessions: ScrimSession[] = [
     teams: '16–18 Teams',
     entryOptions: [
       {
-        entryFee: 30,
-        prizePool: 500,
+        entryFee: 35,
+        prizePool: 220,
         prizeDistribution: [
-          { rank: '🥇 1st', amount: '₹110' },
-          { rank: '🥈 2nd', amount: '₹50' },
-          { rank: '🥉 3rd', amount: '₹35' },
+          { rank: '🥇 1st', amount: '₹160' },
+          { rank: '🥈 2nd', amount: '₹70' },
+          { rank: '🥉 3rd', amount: '₹50' },
+          { rank: 'MVP', amount: '₹35' },
           { rank: '4th', amount: 'FREE SLOT' },
         ],
       },
@@ -47,12 +49,13 @@ export const scrimSessions: ScrimSession[] = [
     teams: '16–18 Teams',
     entryOptions: [
       {
-        entryFee: 30,
-        prizePool: 500,
+        entryFee: 35,
+        prizePool: 220,
         prizeDistribution: [
-          { rank: '🥇 1st', amount: '₹110' },
-          { rank: '🥈 2nd', amount: '₹50' },
-          { rank: '🥉 3rd', amount: '₹35' },
+          { rank: '🥇 1st', amount: '₹160' },
+          { rank: '🥈 2nd', amount: '₹70' },
+          { rank: '🥉 3rd', amount: '₹50' },
+          { rank: 'MVP', amount: '₹35' },
           { rank: '4th', amount: 'FREE SLOT' },
         ],
       },
@@ -66,12 +69,13 @@ export const scrimSessions: ScrimSession[] = [
     teams: '16–18 Teams',
     entryOptions: [
       {
-        entryFee: 30,
-        prizePool: 500,
+        entryFee: 35,
+        prizePool: 220,
         prizeDistribution: [
-          { rank: '🥇 1st', amount: '₹110' },
-          { rank: '🥈 2nd', amount: '₹50' },
-          { rank: '🥉 3rd', amount: '₹35' },
+          { rank: '🥇 1st', amount: '₹160' },
+          { rank: '🥈 2nd', amount: '₹70' },
+          { rank: '🥉 3rd', amount: '₹50' },
+          { rank: 'MVP', amount: '₹35' },
           { rank: '4th', amount: 'FREE SLOT' },
         ],
       },

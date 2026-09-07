@@ -2,8 +2,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, CheckCircle2, Clock3, Crosshair, Instagram, MessageCircle, Radio, ShieldCheck, Trophy, Users, Youtube } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import firstHeroPoster from '../assets/posters/ChatGPT Image Sep 7, 2026, 03_47_40 PM.png';
-import secondHeroPoster from '../assets/posters/ChatGPT Image Sep 7, 2026, 03_47_40 PM.png';
+import firstHeroPoster from '../assets/posters/file_00000000026882078aceb94f22f20bf4.png';
+import secondHeroPoster from '../assets/posters/file_00000000cd8881f58dd1977845c08381.png';
 import { leaderboardTeams } from '../data/leaderboard';
 import { results } from '../data/results';
 import { scrimSessions } from '../data/scrims';
@@ -71,7 +71,7 @@ const HomePage = () => {
           </motion.div>
           <div className="mt-12 grid max-w-2xl grid-cols-3 gap-3 border-t border-white/10 pt-6">
             <div><p className="metric-value">4</p><p className="metric-label">Daily slots</p></div>
-            <div><p className="metric-value">₹30</p><p className="metric-label">Entry fee</p></div>
+            <div><p className="metric-value">₹35</p><p className="metric-label">Entry fee</p></div>
             <div><p className="metric-value">16</p><p className="metric-label">Team lobby</p></div>
           </div>
         </div>
@@ -104,7 +104,7 @@ const HomePage = () => {
 
       <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
         <div className="section-heading"><div><p className="eyebrow">Today at Zeptor</p><h2>SCRIM SCHEDULE</h2></div></div>
-        <div className="schedule-list mt-8">{scrimSessions.map((session, index) => <div className="schedule-row" key={session.id}><span className="schedule-index">0{index + 1}</span><strong>{session.time}</strong><span>₹30 entry</span><span>₹{session.entryOptions[0].prizePool} prize pool</span><Link to={`/scrims/${session.id}`} aria-label={`Book ${session.time}`}><ArrowRight size={18} /></Link></div>)}</div>
+        <div className="schedule-list mt-8">{scrimSessions.map((session, index) => <div className="schedule-row" key={session.id}><span className="schedule-index">0{index + 1}</span><strong>{session.time}</strong><span>₹35 entry</span><span>₹{session.entryOptions[0].prizePool} prize pool</span><Link to={`/scrims/${session.id}`} aria-label={`Book ${session.time}`}><ArrowRight size={18} /></Link></div>)}</div>
       </section>
 
       <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
