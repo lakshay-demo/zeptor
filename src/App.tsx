@@ -1,18 +1,26 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
+import { RequireAdmin, RequireAuth } from './components/ProtectedRoute';
+import AccountPage from './routes/AccountPage';
+import AdminPage from './routes/AdminPage';
+import ForgotPasswordPage from './routes/ForgotPasswordPage';
 import HomePage from './routes/HomePage';
-import ScrimsPage from './routes/ScrimsPage';
-import LeaderboardPage from './routes/LeaderboardPage';
-import TeamsPage from './routes/TeamsPage';
-import ResultsPage from './routes/ResultsPage';
 import LivePage from './routes/LivePage';
+import MediaPage from './routes/MediaPage';
 import NewsPage from './routes/NewsPage';
+import ResetPasswordPage from './routes/ResetPasswordPage';
+import ResultsPage from './routes/ResultsPage';
+import ScrimDetailsPage from './routes/ScrimDetailsPage';
+import ScrimsPage from './routes/ScrimsPage';
+import TeamsPage from './routes/TeamsPage';
+import LeaderboardPage from './routes/LeaderboardPage';
 import AboutPage from './routes/AboutPage';
 import ContactPage from './routes/ContactPage';
 import CommunityPage from './routes/CommunityPage';
-import ScrimDetailsPage from './routes/ScrimDetailsPage';
-import AdminPage from './routes/AdminPage';
-import MediaPage from './routes/MediaPage';
+import MonthlyRewardsPage from './routes/MonthlyRewardsPage';
+import RewardWinnersPage from './routes/RewardWinnersPage';
+import TournamentDetailsPage from './routes/TournamentDetailsPage';
+import TournamentsPage from './routes/TournamentsPage';
 
 const App = () => (
   <Routes>
@@ -29,7 +37,16 @@ const App = () => (
       <Route path="contact" element={<ContactPage />} />
       <Route path="community" element={<CommunityPage />} />
       <Route path="media" element={<MediaPage />} />
-      <Route path="admin" element={<AdminPage />} />
+      <Route path="tournaments" element={<TournamentsPage />} />
+      <Route path="tournaments/:id" element={<TournamentDetailsPage />} />
+      <Route path="rewards" element={<MonthlyRewardsPage />} />
+      <Route path="rewards/winners" element={<RewardWinnersPage />} />
+      <Route path="login" element={<Navigate to="/" replace />} />
+      <Route path="signup" element={<Navigate to="/" replace />} />
+      <Route path="forgot-password" element={<ForgotPasswordPage />} />
+      <Route path="reset-password" element={<ResetPasswordPage />} />
+      <Route path="account" element={<RequireAuth><AccountPage /></RequireAuth>} />
+      <Route path="admin" element={<RequireAdmin><AdminPage /></RequireAdmin>} />
     </Route>
   </Routes>
 );

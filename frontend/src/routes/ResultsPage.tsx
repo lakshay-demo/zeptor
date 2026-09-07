@@ -1,0 +1,98 @@
+import { motion } from 'framer-motion';
+import { Filter, Trophy } from 'lucide-react';
+import { useState } from 'react';
+import { results } from '../data/results';
+
+const filters = ['All', 'Daily Scrims', 'Recent'];
+
+const ResultsPage = () => {
+  const [activeFilter, setActiveFilter] = useState('All');
+  const scrimResults = results.filter((item) => item.category === 'Daily Scrim');
+  const filtered = scrimResults.filter((item) => activeFilter === 'All' || activeFilter === 'Recent' || activeFilter === 'Daily Scrims');
+
+  return (
+    <div className="mx-auto max-w-7xl px-4 pb-16 pt-10 sm:px-6 lg:px-8">
+      <section className="rounded-[40px] border border-violet/25 bg-gradient-to-br from-violet/5 to-purple/5 backdrop-blur p-8 shadow-[0_0_40px_rgba(168,85,247,0.15)]">
+        <p className="text-sm uppercase tracking-[0.35em] text-violet/80 font-semibold">Latest Results</p>
+        <h1 className="mt-4 text-4xl font-semibold text-white sm:text-5xl">Daily scrim results</h1>
+        <p className="mt-4 max-w-2xl text-sm leading-7 text-silver-muted sm:text-base">
+          Track published Zeptor scrim outcomes with a clean scoreboard for teams and match-day performance.
+        </p>
+      </section>
+
+      <section className="mt-10 grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
+        <div className="space-y-6">
+          <div className="rounded-[36px] border border-white/10 bg-[#0f0f18] p-6 shadow-card">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <p className="text-sm uppercase tracking-[0.35em] text-violet/80 font-semibold">Filter results</p>
+                <h2 className="mt-3 text-2xl font-semibold text-white">Find the right event type</h2>
+              </div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-violet/20 bg-gradient-to-r from-violet/10 to-purple/5 px-4 py-2 text-sm text-silver-muted">
+                <Filter size={18} />
+                {activeFilter}
+              </div>
+            </div>
+            <div className="mt-6 flex flex-wrap gap-3">
+              {filters.map((filter) => (
+                <button
+                  key={filter}
+                  onClick={() => setActiveFilter(filter)}
+                  className={`rounded-full px-4 py-2 text-sm font-semibold transition ${activeFilter === filter ? 'bg-violet text-white' : 'bg-gradient-to-r from-violet/10 to-purple/5 border border-violet/20 text-silver-muted hover:bg-violet/15 hover:border-violet/30'}`}
+                >
+                  {filter}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid gap-6">
+            {filtered.length > 0 ? (
+              filtered.map((item) => (
+                <motion.div key={item.id} initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }} className="rounded-[36px] border border-violet/20 bg-gradient-to-br from-violet/5 to-purple/5 backdrop-blur p-6 shadow-[0_0_30px_rgba(168,85,247,0.12)] hover:shadow-[0_0_50px_rgba(168,85,247,0.25)] transition-all duration-300">
+                  <div className="flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.35em] text-violet/80 font-semibold">{item.category}</p>
+                      <h3 className="mt-3 text-2xl font-semibold text-white">{item.event}</h3>
+                    </div>
+                    <div className="rounded-full bg-gradient-to-r from-violet/10 to-purple/5 border border-violet/20 px-4 py-2 text-sm font-semibold text-silver-muted">{item.date}</div>
+                  </div>
+                  <div className="mt-5 grid gap-4 sm:grid-cols-3 text-sm text-silver/80">
+                    <div className="rounded-3xl bg-white/5 p-4">
+                      <p className="font-semibold text-white">Winner</p>
+                      <p className="mt-2">{item.winner}</p>
+                    </div>
+                    <div className="rounded-3xl bg-white/5 p-4">
+                      <p className="font-semibold text-white">Runner-up</p>
+                      <p className="mt-2">{item.runnerUp}</p>
+                    </div>
+                    <div className="rounded-3xl bg-white/5 p-4">
+                      <p className="font-semibold text-white">Prize</p>
+                      <p className="mt-2">{item.prizePool}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))
+            ) : (
+              <div className="rounded-[36px] border border-violet/20 bg-gradient-to-br from-violet/5 to-purple/5 p-10 text-center text-sm text-silver-muted">
+                No results published yet. Check back soon.
+              </div>
+            )}
+          </div>
+        </div>
+
+        <aside className="space-y-6">
+          <div className="rounded-[36px] border border-white/10 bg-[#0f0f18] p-6 shadow-card">
+            <div className="flex items-center gap-3 text-violet">
+              <Trophy size={20} />
+              <p className="text-sm uppercase tracking-[0.35em] text-violet/80 font-semibold">Performance</p>
+            </div>
+            <p className="mt-4 text-sm leading-7 text-silver-muted">Highlight the highest prize pools, recent champions and the teams setting the pace in Zeptor competition.</p>
+          </div>
+        </aside>
+      </section>
+    </div>
+  );
+};
+
+export default ResultsPage;

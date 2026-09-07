@@ -9,34 +9,13 @@ export const scrimSessions: ScrimSession[] = [
     teams: '16–18 Teams',
     entryOptions: [
       {
-        entryFee: 25,
+        entryFee: 30,
         prizePool: 500,
         prizeDistribution: [
           { rank: '🥇 1st', amount: '₹110' },
           { rank: '🥈 2nd', amount: '₹50' },
           { rank: '🥉 3rd', amount: '₹35' },
           { rank: '4th', amount: 'FREE SLOT' },
-        ],
-      },
-      {
-        entryFee: 35,
-        prizePool: 700,
-        prizeDistribution: [
-          { rank: '🥇 1st', amount: '₹170' },
-          { rank: '🥈 2nd', amount: '₹85' },
-          { rank: '🥉 3rd', amount: '₹45' },
-          { rank: '4th', amount: 'FREE SLOT' },
-        ],
-      },
-      {
-        entryFee: 60,
-        prizePool: 1000,
-        prizeDistribution: [
-          { rank: '🥇 1st', amount: '₹350' },
-          { rank: '🥈 2nd', amount: '₹130' },
-          { rank: '🥉 3rd', amount: '₹90' },
-          { rank: '4th', amount: '₹60' },
-          { rank: '5th', amount: 'FREE SLOT' },
         ],
       },
     ],
@@ -49,34 +28,13 @@ export const scrimSessions: ScrimSession[] = [
     teams: '16–18 Teams',
     entryOptions: [
       {
-        entryFee: 25,
+        entryFee: 30,
         prizePool: 500,
         prizeDistribution: [
           { rank: '🥇 1st', amount: '₹110' },
           { rank: '🥈 2nd', amount: '₹50' },
           { rank: '🥉 3rd', amount: '₹35' },
           { rank: '4th', amount: 'FREE SLOT' },
-        ],
-      },
-      {
-        entryFee: 35,
-        prizePool: 700,
-        prizeDistribution: [
-          { rank: '🥇 1st', amount: '₹170' },
-          { rank: '🥈 2nd', amount: '₹85' },
-          { rank: '🥉 3rd', amount: '₹45' },
-          { rank: '4th', amount: 'FREE SLOT' },
-        ],
-      },
-      {
-        entryFee: 60,
-        prizePool: 1000,
-        prizeDistribution: [
-          { rank: '🥇 1st', amount: '₹350' },
-          { rank: '🥈 2nd', amount: '₹130' },
-          { rank: '🥉 3rd', amount: '₹90' },
-          { rank: '4th', amount: '₹60' },
-          { rank: '5th', amount: 'FREE SLOT' },
         ],
       },
     ],
@@ -89,34 +47,13 @@ export const scrimSessions: ScrimSession[] = [
     teams: '16–18 Teams',
     entryOptions: [
       {
-        entryFee: 25,
+        entryFee: 30,
         prizePool: 500,
         prizeDistribution: [
           { rank: '🥇 1st', amount: '₹110' },
           { rank: '🥈 2nd', amount: '₹50' },
           { rank: '🥉 3rd', amount: '₹35' },
           { rank: '4th', amount: 'FREE SLOT' },
-        ],
-      },
-      {
-        entryFee: 35,
-        prizePool: 700,
-        prizeDistribution: [
-          { rank: '🥇 1st', amount: '₹170' },
-          { rank: '🥈 2nd', amount: '₹85' },
-          { rank: '🥉 3rd', amount: '₹45' },
-          { rank: '4th', amount: 'FREE SLOT' },
-        ],
-      },
-      {
-        entryFee: 60,
-        prizePool: 1000,
-        prizeDistribution: [
-          { rank: '🥇 1st', amount: '₹350' },
-          { rank: '🥈 2nd', amount: '₹130' },
-          { rank: '🥉 3rd', amount: '₹90' },
-          { rank: '4th', amount: '₹60' },
-          { rank: '5th', amount: 'FREE SLOT' },
         ],
       },
     ],
@@ -129,34 +66,13 @@ export const scrimSessions: ScrimSession[] = [
     teams: '16–18 Teams',
     entryOptions: [
       {
-        entryFee: 25,
+        entryFee: 30,
         prizePool: 500,
         prizeDistribution: [
           { rank: '🥇 1st', amount: '₹110' },
           { rank: '🥈 2nd', amount: '₹50' },
           { rank: '🥉 3rd', amount: '₹35' },
           { rank: '4th', amount: 'FREE SLOT' },
-        ],
-      },
-      {
-        entryFee: 35,
-        prizePool: 700,
-        prizeDistribution: [
-          { rank: '🥇 1st', amount: '₹170' },
-          { rank: '🥈 2nd', amount: '₹85' },
-          { rank: '🥉 3rd', amount: '₹45' },
-          { rank: '4th', amount: 'FREE SLOT' },
-        ],
-      },
-      {
-        entryFee: 60,
-        prizePool: 1000,
-        prizeDistribution: [
-          { rank: '🥇 1st', amount: '₹350' },
-          { rank: '🥈 2nd', amount: '₹130' },
-          { rank: '🥉 3rd', amount: '₹90' },
-          { rank: '4th', amount: '₹60' },
-          { rank: '5th', amount: 'FREE SLOT' },
         ],
       },
     ],

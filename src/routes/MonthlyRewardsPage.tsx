@@ -120,32 +120,34 @@ const MonthlyRewardsPage = () => (
         </Link>
       </div>
 
-      <div className="mt-6 overflow-hidden rounded-[28px] border border-violet/15">
-        <div className="grid grid-cols-[1.4fr_0.8fr_0.8fr_0.8fr_0.8fr] bg-violet/10 px-4 py-3 text-xs uppercase tracking-[0.28em] text-silver/80">
-          <span>Team</span>
-          <span>Score</span>
-          <span>Draws</span>
-          <span>Status</span>
-          <span>Progress</span>
-        </div>
-
-        {rewardLeaderboard.map((team) => (
-          <div key={team.teamId} className="grid grid-cols-[1.4fr_0.8fr_0.8fr_0.8fr_0.8fr] items-center gap-2 border-t border-violet/10 bg-[#111118] px-4 py-4 text-sm text-silver/80">
-            <div>
-              <p className="font-semibold text-white">{team.teamName}</p>
-              <p className="mt-1 text-xs text-silver/60">{team.participation} scrims</p>
-            </div>
-            <span className="font-semibold text-white">{team.totalScore}</span>
-            <span>{team.drawEntries}</span>
-            <span className={team.status === 'Eligible' ? 'text-violet' : 'text-amber-300'}>{team.status}</span>
-            <div className="flex items-center gap-2">
-              <div className="h-2.5 w-full overflow-hidden rounded-full bg-white/10">
-                <div className="h-full rounded-full bg-gradient-to-r from-violet to-purple" style={{ width: `${Math.min((team.totalScore / rewardSettings.minEligibilityScore) * 100, 100)}%` }} />
-              </div>
-              <span className="min-w-[40px] text-right text-xs text-white">{Math.min(Math.round((team.totalScore / rewardSettings.minEligibilityScore) * 100), 100)}%</span>
-            </div>
+      <div className="mt-6 overflow-x-auto rounded-[28px] border border-violet/15">
+        <div className="min-w-[680px]">
+          <div className="grid grid-cols-[1.4fr_0.8fr_0.8fr_0.8fr_0.8fr] bg-violet/10 px-4 py-3 text-xs uppercase tracking-[0.28em] text-silver/80">
+            <span>Team</span>
+            <span>Score</span>
+            <span>Draws</span>
+            <span>Status</span>
+            <span>Progress</span>
           </div>
-        ))}
+
+          {rewardLeaderboard.map((team) => (
+            <div key={team.teamId} className="grid grid-cols-[1.4fr_0.8fr_0.8fr_0.8fr_0.8fr] items-center gap-2 border-t border-violet/10 bg-[#111118] px-4 py-4 text-sm text-silver/80">
+              <div>
+                <p className="font-semibold text-white">{team.teamName}</p>
+                <p className="mt-1 text-xs text-silver/60">{team.participation} scrims</p>
+              </div>
+              <span className="font-semibold text-white">{team.totalScore}</span>
+              <span>{team.drawEntries}</span>
+              <span className={team.status === 'Eligible' ? 'text-violet' : 'text-amber-300'}>{team.status}</span>
+              <div className="flex items-center gap-2">
+                <div className="h-2.5 w-full overflow-hidden rounded-full bg-white/10">
+                  <div className="h-full rounded-full bg-gradient-to-r from-violet to-purple" style={{ width: `${Math.min((team.totalScore / rewardSettings.minEligibilityScore) * 100, 100)}%` }} />
+                </div>
+                <span className="min-w-[40px] text-right text-xs text-white">{Math.min(Math.round((team.totalScore / rewardSettings.minEligibilityScore) * 100), 100)}%</span>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
 

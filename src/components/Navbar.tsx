@@ -1,20 +1,25 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, Instagram, Youtube, X } from 'lucide-react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import logoPoster from '../assets/posters/WhatsApp Image 2026-08-11 at 11.34.55 PM.jpeg';
+import logoPoster from '../assets/posters/logo.png';
 import { siteConfig } from '../data/siteConfig';
+import { useAuth } from '../context/AuthContext';
 
 const navItems = [
   { path: '/', label: 'Home' },
   { path: '/scrims', label: 'Daily Scrims' },
   { path: '/results', label: 'Results' },
   { path: '/leaderboard', label: 'Leaderboard' },
+  { path: '/tournaments', label: 'Tournaments' },
+  { path: '/rewards', label: 'Rewards' },
   { path: '/media', label: 'Media' },
   { path: '/community', label: 'Community' },
 ];
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const { isLoggedIn, isAdmin, signOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -23,6 +28,11 @@ const Navbar = () => {
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate('/', { replace: true });
+  };
 
   return (
     <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'backdrop-frost border-b border-violet/20 shadow-card py-3' : 'bg-transparent py-4'}`}>
@@ -70,7 +80,18 @@ const Navbar = () => {
           <a href={siteConfig.youtube} target="_blank" rel="noreferrer" className="text-silver/80 transition hover:text-white">
             <Youtube size={18} />
           </a>
-          <Link to="/scrims" className="btn-primary px-5 py-2 text-xs">BOOK A SCRIM</Link>
+
+          {isLoggedIn ? (
+            <>
+              {isAdmin && (
+                <Link to="/admin" className="text-xs uppercase tracking-[0.2em] text-violet hover:text-white">Admin</Link>
+              )}
+              <Link to="/account" className="btn-secondary px-4 py-2 text-[10px]">My Account</Link>
+              <button type="button" onClick={handleLogout} className="btn-primary px-4 py-2 text-[10px]">Logout</button>
+            </>
+          ) : null}
+
+          {!isLoggedIn && <Link to="/scrims" className="btn-primary px-5 py-2 text-[10px]">BOOK A SCRIM</Link>}
         </div>
 
         <button
@@ -114,6 +135,17 @@ const Navbar = () => {
                   </Link>
                 ))}
               </div>
+
+              {isLoggedIn ? (
+                <div className="mt-6 space-y-3">
+                  {isAdmin && (
+                    <Link to="/admin" onClick={() => setIsOpen(false)} className="btn-secondary w-full px-5 py-3 text-sm">Admin</Link>
+                  )}
+                  <Link to="/account" onClick={() => setIsOpen(false)} className="btn-secondary w-full px-5 py-3 text-sm">My Account</Link>
+                  <button type="button" onClick={() => { void handleLogout(); setIsOpen(false); }} className="btn-primary w-full px-5 py-3 text-sm">Logout</button>
+                </div>
+              ) : null}
+
               <Link to="/scrims" onClick={() => setIsOpen(false)} className="btn-primary mt-6 w-full px-5 py-3 text-sm">BOOK A SCRIM</Link>
               <div className="mt-6 flex items-center justify-between gap-3 border-t border-white/10 pt-6 text-silver/80">
                 <a href={siteConfig.instagram} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-white hover:text-violet">

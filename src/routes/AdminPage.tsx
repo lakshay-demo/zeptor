@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, BarChart3, CalendarDays, Eye, MessageSquare, PlusCircle, Search, ShieldCheck, Trash2, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import firstHeroPoster from '../assets/posters/ChatGPT Image Aug 25, 2026, 08_53_19 PM.png';
-import secondHeroPoster from '../assets/posters/ChatGPT Image Aug 25, 2026, 08_49_13 PM.png';
+import firstHeroPoster from '../assets/posters/ChatGPT Image Sep 7, 2026, 03_47_40 PM.png';
+import secondHeroPoster from '../assets/posters/ChatGPT Image Sep 7, 2026, 03_47_40 PM.png';
 import { featuredTournament } from '../data/tournaments';
 import { leaderboardTeams } from '../data/leaderboard';
 import { scrimSessions } from '../data/scrims';
