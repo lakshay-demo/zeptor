@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import firstHeroPoster from '../assets/posters/file_00000000026882078aceb94f22f20bf4.png';
 import secondHeroPoster from '../assets/posters/file_00000000cd8881f58dd1977845c08381.png';
+import thirdHeroPoster from '../assets/posters/file_0000000035208208bae5f77d0fd92901.png';
 import { leaderboardTeams } from '../data/leaderboard';
 import { results } from '../data/results';
 import { scrimSessions } from '../data/scrims';
@@ -16,6 +17,7 @@ type HeroBanner = { image: string; title: string };
 const defaultBanners: HeroBanner[] = [
   { image: firstHeroPoster, title: 'Zeptor Esports daily competition' },
   { image: secondHeroPoster, title: 'Zeptor Esports competitive action' },
+  { image: thirdHeroPoster, title: 'Zeptor Esports tournament energy' },
 ];
 
 const entryColors = ['border-white/10', 'border-violet/40', 'border-bright/50'];
@@ -51,6 +53,15 @@ const HomePage = () => {
           <AnimatePresence mode="wait">
             <motion.img key={banners[activeBanner]?.image} src={banners[activeBanner]?.image || defaultBanners[0].image} alt={banners[activeBanner]?.title || 'Zeptor Esports'} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.45 }} />
           </AnimatePresence>
+
+          <div className="poster-overlay">
+            <div className="poster-status-pill"><span className="status-dot" /> LIVE</div>
+            <div className="poster-copy">
+              <p className="eyebrow">Daily scrims</p>
+              <h2>{banners[activeBanner]?.title || 'Zeptor Esports'}</h2>
+            </div>
+          </div>
+
           <div className="poster-controls">
             {banners.map((banner, index) => <button key={`${banner.title}-${index}`} type="button" aria-label={`Show banner ${index + 1}`} onClick={() => setActiveBanner(index)} className={index === activeBanner ? 'active' : ''} />)}
           </div>

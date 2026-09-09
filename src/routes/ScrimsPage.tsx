@@ -61,7 +61,10 @@ const ScrimsPage = () => {
 
       <section className="scrims-layout mt-10 grid gap-6 lg:grid-cols-[1.3fr_0.7fr]">
         <div className="space-y-6">
-          {scrimSessions.map((session, idx) => (
+          {scrimSessions.map((session, idx) => {
+            const isEveningLiveSession = session.time === '7:00 PM – 9:00 PM';
+
+            return (
             <motion.div
               key={session.id}
               initial={{ opacity: 0, y: 18 }}
@@ -74,6 +77,19 @@ const ScrimsPage = () => {
                 <div>
                   <p className="text-xs uppercase tracking-[0.35em] text-violet/70">{session.time}</p>
                   <h2 className="mt-3 text-2xl font-semibold text-white">{session.title}</h2>
+                  {isEveningLiveSession && (
+                    <div className="mt-4 flex flex-wrap items-center gap-3">
+                      <span className="rounded-full border border-emerald-400/60 bg-gradient-to-r from-emerald-500/20 via-amber-400/20 to-violet-500/20 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.35em] text-emerald-200 shadow-[0_0_25px_rgba(16,185,129,0.25)]">
+                        OFFER: ₹35 → ₹30
+                      </span>
+                      <span className="rounded-full border border-violet/30 bg-violet/10 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.35em] text-violet-100 shadow-[0_0_20px_rgba(168,85,247,0.18)]">
+                        YouTube Live
+                      </span>
+                    </div>
+                  )}
+                  {isEveningLiveSession && (
+                    <p className="mt-3 text-[11px] font-medium uppercase tracking-[0.3em] text-amber-200">7–9PM mai YouTube Live bhi hoga</p>
+                  )}
                 </div>
                 <div className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.35em] text-violet/70">
                   {session.maps.map((map) => (
@@ -105,7 +121,8 @@ const ScrimsPage = () => {
                 <span>{session.teams}</span>
               </div>
             </motion.div>
-          ))}
+            );
+          })}
         </div>
 
         <aside className="space-y-6">

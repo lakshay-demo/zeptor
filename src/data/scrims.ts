@@ -49,7 +49,7 @@ export const scrimSessions: ScrimSession[] = [
     teams: '16–18 Teams',
     entryOptions: [
       {
-        entryFee: 35,
+        entryFee: 30,
         prizePool: 220,
         prizeDistribution: [
           { rank: '🥇 1st', amount: '₹160' },

@@ -1081,14 +1081,83 @@ label {
 .metric-value { font-family: 'Bebas Neue', sans-serif; font-size: 2.1rem; font-weight: 400; color: white; }
 .metric-label { color: var(--text-muted); font-size: 0.58rem; margin-top: 0.2rem; }
 
-.hero-poster { min-height: 460px; overflow: hidden; border: 1px solid rgba(192, 132, 252, 0.4); border-radius: 1.5rem; background: #0e0e14; box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6), 0 0 60px rgba(124, 58, 237, 0.2); }
-.hero-poster::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(135deg, rgba(5, 5, 7, 0.25), transparent 45%, rgba(5, 5, 7, 0.72)); }
+.hero-poster {
+  position: relative;
+  min-height: 460px;
+  overflow: hidden;
+  border: 1px solid rgba(192, 132, 252, 0.22);
+  border-radius: 1.5rem;
+  background: #0d0d12;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4), 0 0 30px rgba(168, 85, 247, 0.08);
+}
+.hero-poster::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), transparent 38%, rgba(255, 255, 255, 0.04));
+  pointer-events: none;
+  z-index: 1;
+}
+.hero-poster::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(5,5,7,0.12) 0%, rgba(5,5,7,0.18) 32%, rgba(5,5,7,0.76) 100%);
+  z-index: 1;
+}
 .hero-poster img { width: 100%; height: 100%; min-height: 460px; object-fit: cover; object-position: center; animation: posterBreath 8s ease-in-out infinite alternate; }
-.poster-controls { position: absolute; z-index: 2; bottom: 1.25rem; left: 1.25rem; display: flex; gap: 0.4rem; }
-.poster-controls { padding: 0.45rem; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; background: rgba(5,5,7,0.62); backdrop-filter: blur(10px); }
-.poster-controls button { width: 2.25rem; height: 0.3rem; border: 0; border-radius: 999px; background: rgba(255,255,255,0.35); transition: width .25s ease, background .25s ease, box-shadow .25s ease; }
-.poster-controls button:hover { background: rgba(255,255,255,0.75); }
-.poster-controls button.active { width: 4rem; background: var(--primary-bright); box-shadow: 0 0 14px rgba(192,132,252,0.75); }
+.poster-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem 1rem 1.2rem;
+  pointer-events: none;
+}
+.poster-status-pill {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(12, 16, 24, 0.42);
+  backdrop-filter: blur(10px);
+  color: #e2e8f0;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.poster-copy {
+  max-width: 15rem;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  background: rgba(8, 10, 18, 0.42);
+  backdrop-filter: blur(8px);
+}
+.poster-copy .eyebrow {
+  margin-bottom: 0.35rem;
+  color: #d8b4fe;
+  letter-spacing: 0.18em;
+}
+.poster-copy h2 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(1.1rem, 1.8vw, 1.7rem);
+  line-height: 1.12;
+  letter-spacing: 0.02em;
+}
+.poster-controls { position: absolute; z-index: 3; bottom: 1rem; left: 1rem; display: flex; gap: 0.5rem; padding: 0.42rem 0.5rem; border: 1px solid rgba(255,255,255,0.12); border-radius: 999px; background: rgba(8,10,18,0.56); backdrop-filter: blur(10px); }
+.poster-controls button { width: 1.9rem; height: 0.28rem; border: 0; border-radius: 999px; background: rgba(255,255,255,0.4); transition: width .25s ease, background .25s ease, transform .2s ease; }
+.poster-controls button:hover { background: rgba(255,255,255,0.7); }
+.poster-controls button.active { width: 3.4rem; background: linear-gradient(90deg, #c084fc, #8b5cf6); box-shadow: 0 0 10px rgba(192,132,252,0.55); }
 
 @keyframes posterBreath {
   from { transform: scale(1); }

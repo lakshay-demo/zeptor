@@ -105,7 +105,8 @@ const ScrimsPage = () => {
                 <span>{session.teams}</span>
               </div>
             </motion.div>
-          ))}
+            );
+          })}
         </div>
 
         <aside className="space-y-6">

@@ -99,7 +99,7 @@ export const scrimSessions: ScrimSession[] = [
         ],
       },
       {
-        entryFee: 35,
+        entryFee: 30,
         prizePool: 700,
         prizeDistribution: [
           { rank: '🥇 1st', amount: '₹170' },
